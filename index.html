@@ -1,0 +1,1660 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#0f7c86">
+<title>淑惠の客戶保單整理</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:"Noto Sans TC","Noto Sans CJK TC","PingFang TC","Microsoft JhengHei","Heiti TC",sans-serif;background:#eaf3f4;color:#16323d;-webkit-text-size-adjust:100%;min-height:100vh}
+[hidden]{display:none!important}
+button,input{font:inherit}
+/* ---- 登入 ---- */
+#login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+#login form{width:100%;max-width:340px;background:#fff;border-radius:20px;padding:26px 22px 22px;box-shadow:0 6px 24px rgba(15,124,134,.14)}
+#login .lt{font-size:20px;margin:0 0 18px;text-align:center;color:#16323d}
+#login label{display:block;font-size:13px;font-weight:700;color:#33525d;margin:0 0 6px}
+#login input{width:100%;height:46px;border:1.5px solid #cfe0e3;border-radius:12px;padding:0 14px;font-size:16px;margin-bottom:16px;background:#f9fcfc;color:#16323d;outline:none}
+#login input:focus{border-color:#1a9aa0;background:#fff;box-shadow:0 0 0 3px rgba(26,154,160,.15)}
+#login button{width:100%;height:48px;border:0;border-radius:12px;background:linear-gradient(135deg,#0f7c86,#1f6fb2);color:#fff;font-size:16px;font-weight:700;cursor:pointer}
+#login button:disabled{opacity:.6;cursor:wait}
+#login .fg{display:block;text-align:center;margin-top:14px;font-size:13px;color:#1f6fb2;text-decoration:none}
+#ferr{color:#c9302c;font-size:13px;min-height:18px;margin:-6px 0 10px}
+.setup{background:#eef7ff;border:1.5px solid #9cc7ee;border-radius:14px;padding:10px 12px;margin:0 0 12px;font-size:13.5px;color:#1b4a73}.setup a{color:#1f6fb2;font-weight:700}
+.rcbox{font:700 18px/1.6 ui-monospace,Menlo,monospace;letter-spacing:1px;background:#fffbe8;border:1.5px dashed #e0b53a;border-radius:10px;padding:10px;margin:8px 0;word-break:break-all;text-align:center}
+#err{min-height:20px;margin:-4px 0 10px;color:#c9302c;font-size:13px;text-align:center}
+/* ---- 內容區 ---- */
+#bar{position:sticky;top:0;z-index:5;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);border-bottom:1px solid #d8e7e9;display:flex;align-items:center;gap:8px;padding:8px 12px;padding-top:max(8px,env(safe-area-inset-top))}
+#bar .t{flex:1;font-weight:900;font-size:15px;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.btn{border:0;border-radius:10px;height:36px;padding:0 14px;font-size:14px;font-weight:700;cursor:pointer;background:#e3f3f4;color:#0f7c86;text-decoration:none;display:inline-flex;align-items:center;gap:4px}
+.btn.pri{background:linear-gradient(135deg,#0f7c86,#1f6fb2);color:#fff}
+.btn:disabled{opacity:.6;cursor:wait}
+#view{max-width:560px;margin:0 auto;padding:14px 10px 70px}
+#view h1{font-size:21px;margin:8px 4px 2px;font-weight:900}
+#view .sub{font-size:12.5px;color:#5b7480;margin:0 4px 14px}
+.mem{display:block;background:#fff;border-radius:18px;padding:14px 16px;margin-bottom:12px;text-decoration:none;color:inherit;box-shadow:0 2px 10px rgba(15,124,134,.10);border:1.5px solid transparent}
+.mem:active,.mem:hover{border-color:#1a9aa0}
+.mem .r1{display:flex;align-items:center;gap:10px}
+.mem .av{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,#0f7c86,#1f6fb2);color:#fff;font-weight:900;font-size:18px;display:flex;align-items:center;justify-content:center;flex:none}
+.mem .nm{font-weight:900;font-size:17px}.mem .ag{font-size:12px;color:#5b7480}
+.mem .go{margin-left:auto;color:#1a9aa0;font-size:22px}
+.mem .r2{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.chip{font-size:11.5px;border-radius:10px;padding:2px 10px;background:#e3f3f4;color:#0f7c86;font-weight:700}
+.chip.low{background:#fde8e4;color:#c9302c}
+.dl{display:flex;gap:8px;align-items:center;justify-content:space-between;margin:2px 4px 12px}
+.dl .who{font-size:12.5px;color:#5b7480}
+.dlbot{text-align:center;margin:6px 0 18px}
+#demotag{position:fixed;right:8px;bottom:6px;font-size:10px;color:#7d949c;background:rgba(255,255,255,.85);border:1px solid #cfe0e3;border-radius:8px;padding:0 6px;z-index:9;pointer-events:none}
+#msg{text-align:center;color:#5b7480;font-size:13px;padding:30px 0}
+#q{width:100%;height:44px;border:1.5px solid #cfe0e3;border-radius:12px;padding:0 14px;font-size:16px;background:#fff;color:#16323d;outline:none;margin:0 0 12px}
+#q:focus{border-color:#1a9aa0;box-shadow:0 0 0 3px rgba(26,154,160,.15)}
+.fam .av{font-size:13px;width:46px}
+.fam .nm{font-size:16px}.fam .nl{font-size:13px;color:#33525d;margin-top:2px;line-height:1.45}
+.chip.rv{background:#fff4d6;color:#8a6100}
+.note{font-size:12.5px;color:#8a6100;background:#fff9e6;border-radius:12px;padding:8px 12px;margin:0 4px 14px}
+.hit{background:#fff2a8;border-radius:3px}
+.folder{display:block;background:linear-gradient(135deg,#0f7c86,#1f6fb2);color:#fff;border-radius:18px;padding:14px 16px;margin-bottom:14px;text-decoration:none;box-shadow:0 4px 14px rgba(15,124,134,.28)}
+.folder .r1{display:flex;align-items:center;gap:12px}
+.folder .fi{font-size:30px;line-height:1;flex:none}
+.folder .nm{font-weight:900;font-size:18px}.folder .ag{font-size:12.5px;opacity:.9}
+.folder .go{margin-left:auto;font-size:24px}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.cd{background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 1px 6px rgba(15,124,134,.12);position:relative;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;cursor:zoom-in;padding:0;border:0}
+.cd img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
+.cd .ph{color:#9db0b6;font-size:11px}
+.cd .no{position:absolute;left:3px;top:3px;background:rgba(15,124,134,.88);color:#fff;font-size:10px;font-weight:700;border-radius:7px;padding:0 6px;line-height:16px}
+#lb{position:fixed;inset:0;z-index:50;background:rgba(10,24,30,.96);overflow:auto;-webkit-overflow-scrolling:touch;display:flex}
+#lb img{margin:auto;width:100%;max-width:none;height:auto;cursor:zoom-in;touch-action:pan-x pan-y pinch-zoom}
+#lb img.th{filter:blur(2px);opacity:.8}
+#lb.z img{width:230%;cursor:zoom-out;margin:0}
+.lbn{position:fixed;top:50%;z-index:51;width:40px;height:56px;margin-top:-28px;border:0;border-radius:12px;background:rgba(255,255,255,.88);font-size:30px;line-height:1;font-weight:700;color:#16323d;cursor:pointer;display:flex;align-items:center;justify-content:center}
+#lbp{left:6px}#lbq{right:6px}
+.lbn[disabled]{opacity:.25;cursor:default}
+#lbc{position:fixed;left:0;right:0;top:max(18px,env(safe-area-inset-top));text-align:center;color:#fff;font-size:13px;font-weight:700;z-index:51;pointer-events:none}
+#lbx{position:fixed;right:10px;top:max(10px,env(safe-area-inset-top));z-index:51;width:40px;height:40px;border-radius:20px;border:0;background:rgba(255,255,255,.92);font-size:22px;font-weight:700;color:#16323d;cursor:pointer}
+#lbh{position:fixed;left:0;right:0;bottom:8px;text-align:center;color:#cfe0e3;font-size:12px;z-index:51;pointer-events:none}
+@media(min-width:600px){#view{padding-top:22px}}
+.adm{background:#fff7e0;border:1.5px solid #f0c75e;border-radius:14px;padding:8px 10px;margin:0 0 12px}
+.admt{font-size:12.5px;color:#7a5a00;margin-bottom:6px}.admb{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.btn.dang{background:#fde8e4;color:#c9302c}.btn.sm{height:28px;padding:0 10px;font-size:12px}
+.card.adf{background:#fff;border-radius:14px;padding:10px 12px;margin:0 0 12px;box-shadow:0 1px 6px rgba(15,124,134,.1)}
+.adf label{display:block;font-size:12px;font-weight:700;color:#33525d;margin:8px 0 4px}
+.adf input,.adf select,.adf textarea{width:100%;min-width:0;border:1.5px solid #cfe0e3;border-radius:9px;padding:6px 8px;font-size:15px;background:#f9fcfc;color:#16323d}
+.adf textarea{resize:vertical;line-height:1.5}
+.adf .ah{font-weight:900;font-size:14px;margin:4px 0 8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 8px}
+.fl span{display:block;font-size:11px;color:#5b7480;margin-bottom:2px}
+.ck{display:inline-flex!important;align-items:center;gap:4px;margin:6px 10px 0 0!important;font-weight:400!important}.ck input{width:auto!important}
+.itm{border-top:1px dashed #cfe0e3;margin-top:10px;padding-top:8px}.ih{font-size:13px;font-weight:700;display:flex;gap:8px;align-items:center;margin-bottom:6px}
+.arow{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:6px 0;border-top:1px solid #eef4f5}.arow select{width:auto;flex:1;min-width:90px}.ac{font-size:12px;color:#5b7480}
+.tx{margin:8px 0}.tl2{font-size:13px;font-weight:700;margin-bottom:4px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.man{background:#fde8e4;color:#c9302c;font-size:11px;border-radius:8px;padding:0 6px}.auto{background:#e3f3f4;color:#0f7c86;font-size:11px;border-radius:8px;padding:0 6px}
+.rnote2{font-size:11.5px;color:#5b7480;margin:4px 0}.aerr{color:#c9302c;font-size:13px;margin-top:6px}.ph2{font-size:16px;margin:16px 4px 8px}
+.stale{font-size:12.5px;color:#8a6100;background:#fff9e6;border-radius:12px;padding:8px 12px;margin:0 4px 12px}
+ul.lg{margin:0;padding-left:18px;font-size:12.5px;line-height:1.6}
+</style>
+<style id="rcss">
+.rpt,.rpt *{box-sizing:border-box}
+.rpt{font-family:"Noto Sans TC","Noto Sans CJK TC","PingFang TC","Microsoft JhengHei","Heiti TC",sans-serif;color:#16323d;line-height:1.5}
+.rpt .page{position:relative;background:#f4f9fa;padding:16px 14px 34px;margin:0 auto 14px;max-width:540px;border-radius:16px}
+.rpt .hdr{background:linear-gradient(135deg,#0f7c86,#1f6fb2);color:#fff;border-radius:18px;padding:18px 18px 16px;margin-bottom:14px}
+.rpt .brand{font-size:10px;letter-spacing:3px;opacity:.85;display:flex;justify-content:space-between;align-items:center}
+.rpt .demobadge{letter-spacing:1px;font-size:10px;border:1px solid rgba(255,255,255,.7);border-radius:8px;padding:0 7px}
+.rpt .title{font-size:26px;font-weight:900;margin:4px 0 12px;line-height:1.25}
+.rpt .meta{display:flex;gap:6px;font-size:11.5px}
+.rpt .meta div{background:rgba(255,255,255,.16);border-radius:10px;padding:5px 8px;flex:1;line-height:1.35;min-width:0}
+.rpt .meta span{display:block;font-size:9.5px;opacity:.85}
+.rpt .mini{display:flex;justify-content:space-between;font-size:10.5px;color:#5b7480;margin-bottom:10px;border-bottom:2px solid #1a9aa0;padding-bottom:6px;font-weight:700}
+.rpt .mini .mr{display:flex;gap:8px;align-items:center}
+.rpt .demo{font-weight:400;font-size:9px;color:#8aa0a8;border:1px solid #c5d6da;border-radius:6px;padding:0 5px}
+.rpt h2{font-size:17px;font-weight:900;margin:6px 0 8px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.rpt h2:before{content:"";width:5px;height:18px;border-radius:3px;background:#1a9aa0;align-self:center}
+.rpt h2 small{font-size:10.5px;color:#5b7480;font-weight:400}
+.rpt .card{background:#fff;border-radius:16px;padding:12px 14px;box-shadow:0 2px 8px rgba(15,124,134,.08);margin-bottom:12px}
+.rpt .stats{display:flex;gap:7px;margin-bottom:14px}
+.rpt .stats div{flex:1;min-width:0;background:#fff;border-radius:14px;padding:10px 2px;text-align:center;box-shadow:0 2px 8px rgba(15,124,134,.08)}
+.rpt .stats b{display:block;font-size:18px;color:#0f7c86;font-weight:900;line-height:1.3}
+.rpt .stats .alert b{color:#e8604c}
+.rpt .stats span{font-size:10.5px;color:#5b7480}
+.rpt .rate{padding:10px 0;border-bottom:1px dashed #e1ecee}.rpt .rate:last-child{border:none}
+.rpt .rtop{display:flex;align-items:center;gap:8px}
+.rpt .rname{font-weight:900;font-size:13.5px;width:74px;flex:none}
+.rpt .rval{flex:1;font-size:12px;color:#33525d;min-width:0}
+.rpt .pill{font-size:11px;font-weight:700;padding:2px 10px;border-radius:20px;color:#fff;flex:none}
+.rpt .ok{background:#22a06b}.rpt .mid{background:#f0a52b}.rpt .low{background:#e8604c}
+.rpt .bar{height:7px;background:#e9f1f2;border-radius:4px;margin:5px 0 3px}
+.rpt .fill{height:7px;border-radius:4px}
+.rpt .rnote{font-size:10.5px;color:#6c8590;line-height:1.5}
+.rpt .key{background:#fff4ee;border:1.5px solid #f4b3a3;border-radius:14px;padding:10px 14px;font-size:12.5px;line-height:1.7}
+.rpt .key b{color:#c9302c}.rpt .key .kt{font-weight:900;color:#b5412d;font-size:13.5px;margin-bottom:2px}
+.rpt .med .mt{font-weight:900;font-size:14.5px;padding-bottom:6px;border-bottom:1.5px solid #e1ecee;margin-bottom:4px}
+.rpt .msen{font-size:12px;color:#33525d;background:#f0f8f8;border-radius:10px;padding:6px 10px;margin:6px 0 4px;line-height:1.6}
+.rpt .msen b{color:#0f7c86}
+.rpt .mrow{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-bottom:1px dashed #e8f0f1;font-size:12.5px}
+.rpt .mrow:last-child{border:none}.rpt .mrow b{text-align:right;font-weight:700}
+.rpt svg.tl{width:100%;height:auto;display:block}
+.rpt .legend{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:10.5px;color:#5b7480;margin-top:4px}
+.rpt .legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:4px}
+.rpt .bars{display:flex;align-items:flex-end;gap:6px;padding-top:8px}
+.rpt .bc{flex:1;text-align:center;min-width:0}
+.rpt .bv{font-size:10.5px;font-weight:900;color:#0f7c86}
+.rpt .bb{background:#0f8a93;border-radius:5px 5px 0 0;margin:2px 3px 0}
+.rpt .bl{font-size:9.5px;color:#5b7480;margin:4px 0 6px;line-height:1.3}
+.rpt .scrollx{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.rpt table.pay{border-collapse:separate;border-spacing:0;width:100%;min-width:600px;font-size:10px;table-layout:fixed}
+.rpt .pay th{background:#0f7c86;color:#fff;font-weight:700;padding:6px 1px;text-align:center;font-size:10px}
+.rpt .pay th.n,.rpt .pay td.n{width:74px;text-align:left;padding-left:6px;position:sticky;left:0;z-index:1}
+.rpt .pay th.n{background:#0f7c86}.rpt .pay td.n{background:#fff;box-shadow:2px 0 3px rgba(15,124,134,.08)}
+.rpt .pay th.t,.rpt .pay td.t{width:54px}
+.rpt .pay td{border-bottom:1px solid #e6eff0;padding:4px 1px;text-align:center;height:36px;vertical-align:middle}
+.rpt .pay td.n{font-weight:700;font-size:10.5px;line-height:1.3}
+.rpt .pay td.n small{display:block;font-weight:400;color:#6c8590;font-size:9.5px}
+.rpt .pay td.on i{font-style:normal;display:block;background:#d8f0f1;color:#0a5f67;font-weight:700;border-radius:5px;padding:4px 0;font-size:9.5px;margin:0 1px}
+.rpt .pay td.t{font-weight:900;color:#0f7c86;text-align:right;padding-right:4px}
+.rpt .pay tr.sum td{background:#f0f8f8;font-weight:700;border-top:1.5px solid #1a9aa0}
+.rpt .pay tr.sum td.n{background:#f0f8f8}
+.rpt .swipe{font-size:10px;color:#8aa0a8;text-align:right;margin:0 0 4px}
+.rpt .paynote{margin:8px 0 4px;padding-left:16px;font-size:10px;color:#5b7480;line-height:1.6}
+.rpt .pol{background:#fff;border-radius:14px;padding:10px 12px;margin-bottom:8px;box-shadow:0 2px 8px rgba(15,124,134,.07)}
+.rpt .ptop{display:flex;align-items:center;gap:9px}
+.rpt .pno{width:24px;height:24px;border-radius:50%;background:#1a9aa0;color:#fff;font-weight:900;font-size:12px;display:flex;align-items:center;justify-content:center;flex:none}
+.rpt .pco{font-size:10px;color:#1f6fb2;font-weight:700}.rpt .pname{font-size:12.5px;font-weight:900;line-height:1.3}
+.rpt .ptop>div:nth-child(2){flex:1;min-width:0}
+.rpt .pprem{font-size:15px;font-weight:900;color:#0f7c86;white-space:nowrap;text-align:right}.rpt .pprem small{font-size:9.5px;font-weight:400}
+.rpt .pper{font-size:10px;color:#6c8590;margin:4px 0 4px 33px}
+.rpt .st{font-size:9.5px;font-weight:700;border-radius:8px;padding:0 7px;margin-left:4px}
+.rpt .st.ok{background:#e1f5ec;color:#177a52}.rpt .st.info{background:#e8f0fb;color:#2a62a8}
+.rpt .pmeta{display:flex;gap:6px;margin:2px 0 5px 33px}
+.rpt .pmeta div{flex:1;background:#f0f8f8;border-radius:8px;padding:3px 8px;font-size:10.5px;min-width:0}
+.rpt .pmeta span{display:block;font-size:9px;color:#6c8590}
+.rpt .pol ul{margin:2px 0 0 33px;padding-left:16px;font-size:11px;line-height:1.55;color:#33525d}
+.rpt .total{display:flex;justify-content:space-between;align-items:center;background:#e3f3f4;border-radius:12px;padding:10px 14px;font-size:12px}
+.rpt .total small{color:#6c8590;font-size:10px}.rpt .total b{font-size:17px;color:#0f7c86}
+.rpt .rec{display:flex;gap:10px;background:#fff;border-radius:14px;padding:12px;margin-bottom:10px;box-shadow:0 2px 8px rgba(15,124,134,.07)}
+.rpt .rn{flex:none;width:28px;height:28px;border-radius:9px;background:linear-gradient(135deg,#0f7c86,#1f6fb2);color:#fff;font-weight:900;display:flex;align-items:center;justify-content:center}
+.rpt .rt{font-weight:900;font-size:13.5px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.rpt .tag{font-size:9.5px;font-weight:700;border-radius:8px;padding:1px 7px}
+.rpt .tag.hi{background:#fde8e4;color:#c9302c}.rpt .tag.mid{background:#fff1d6;color:#a86a00}.rpt .tag.ok{background:#e1f5ec;color:#177a52}
+.rpt .rd{font-size:11.5px;line-height:1.65;color:#33525d;margin-top:2px}.rpt .rd b{color:#0f7c86}
+.rpt .close{text-align:center;background:linear-gradient(135deg,#0f7c86,#1f6fb2);color:#fff;border-radius:16px;padding:14px 16px;font-size:12px;line-height:1.7;margin-top:4px}
+.rpt .close b{font-size:14.5px}
+.rpt .foot{text-align:center;font-size:9.5px;color:#8aa0a8;margin-top:12px}
+
+.rpt .pay td.on.usd i{background:#e3ecfb;color:#1f4f96}
+.rpt .pay td.t.usd{font-size:8px;color:#1f4f96}
+.rpt .total b{white-space:nowrap}
+.rpt .pay td.pendc{text-align:center;color:#b8860b;font-weight:700;background:#fff7e0;font-size:9px}
+.rpt .pol.c{padding:6px 10px;margin-bottom:5px}
+.rpt .pol.c .pno{width:20px;height:20px;font-size:11px}
+.rpt .pol.c .pname{font-size:11.5px;line-height:1.25}
+.rpt .pol.c .pco{font-size:9px}
+.rpt .pol.c .pprem{font-size:13px}
+.rpt .pol.c .pper{font-size:9px;margin:2px 0 3px 29px;line-height:1.35}
+.rpt .pol.c .pmeta{margin:0 0 2px 29px;gap:5px}
+.rpt .pol.c .pmeta div{padding:2px 7px;font-size:9.5px;line-height:1.3}
+.rpt .pol.c .pmeta span{display:inline;font-size:8.5px;margin-right:4px}
+.rpt .pitems{font-size:9.5px;color:#33525d;line-height:1.45;margin:2px 0 0 29px}
+
+.rpt .pol.c{padding:5px 10px 6px;margin-bottom:4px;border-radius:10px}
+.rpt .pol.c .pnm{flex:1;min-width:0}
+.rpt .pol.c .pname{font-size:11px;font-weight:900;line-height:1.25}
+.rpt .pol.c .pper{font-size:8.5px;color:#6c8590;margin:1px 0 0 28px;line-height:1.35}
+.rpt .pol.c .pper b{color:#1f6fb2}
+.rpt .pol.c .pmeta2{font-size:9px;color:#33525d;margin:1px 0 0 28px;line-height:1.35;background:#f0f8f8;border-radius:6px;padding:1px 6px}
+.rpt .pol.c .pmeta2 b{font-weight:700}
+.rpt .pol.c .pitems{font-size:9px;line-height:1.4;margin:1px 0 0 28px}
+.rpt .pol.c .pprem{font-size:12.5px}
+.rpt .paynote2{font-size:8.5px;color:#5b7480;line-height:1.5;margin:6px 0 3px}
+
+.rpt .pol.c .ptop{gap:7px;line-height:1.2}
+.rpt .pol.c .pno{width:18px;height:18px;font-size:10px}
+.rpt .pol.c .pper,.rpt .pol.c .pmeta2,.rpt .pol.c .pitems{margin-left:25px}
+.rpt .pol.c .st{font-size:8px;padding:0 5px}
+.rpt .p4 .total{padding:6px 12px;margin-top:2px}
+.rpt .p4 .total b{font-size:15px}
+.rpt .p4 h2{margin:2px 0 6px}
+.rpt .pol.c{margin-bottom:3px;padding:4px 9px 5px}
+
+.rpt .pay tr.sum td{font-size:7.5px;padding-left:0;padding-right:0;letter-spacing:-.3px}
+.rpt .pay tr.sum td.t{font-size:8.5px;letter-spacing:0}
+.rpt .pol.c .pname{font-size:11.5px}
+.rpt .pol.c .pper{font-size:9px}
+.rpt .pol.c .pmeta2{font-size:9.5px}
+.rpt .pol.c .pitems{font-size:9.5px}
+
+.rpt .pol:not(.c) .pmeta div:first-child{flex:0 0 20%}
+.rpt .pol:not(.c) .pmeta div{padding:2px 8px}
+.rpt .pol:not(.c) .pmeta{margin-bottom:3px}
+</style>
+</head>
+<body>
+<div id="login">
+ <form id="lf" autocomplete="on" novalidate>
+  <h1 class="lt">淑惠の客戶保單整理</h1>
+  <label for="u">帳號</label>
+  <input id="u" name="username" type="text" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" required>
+  <label for="p">密碼</label>
+  <input id="p" name="password" type="password" autocomplete="current-password" required>
+  <div id="err" role="alert" aria-live="polite"></div>
+  <button id="go" type="submit">登入</button>
+  <a id="fg" class="fg" href="#">忘記密碼？</a>
+ </form>
+ <form id="fgf" hidden novalidate autocomplete="off">
+  <h1 class="lt">用復原碼重設密碼</h1>
+  <label for="fu">帳號</label>
+  <input id="fu" type="text" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false">
+  <label for="fr">復原碼</label>
+  <input id="fr" type="text" autocapitalize="characters" autocorrect="off" spellcheck="false" placeholder="XXXXX-XXXXX-…">
+  <label for="fn1">新密碼（至少 8 個字）</label>
+  <input id="fn1" type="password" autocomplete="new-password">
+  <label for="fn2">再輸入一次新密碼</label>
+  <input id="fn2" type="password" autocomplete="new-password">
+  <div id="ferr" role="alert" aria-live="polite"></div>
+  <button id="fgo" type="submit">重設密碼並登入</button>
+  <a id="fbk" class="fg" href="#">‹ 回登入</a>
+ </form>
+</div>
+<div id="app" hidden>
+ <div id="bar"><a class="btn" id="back" href="#" hidden>‹ 返回</a><div class="t" id="bt"></div><button class="btn" id="out" type="button">登出</button></div>
+ <div id="view"></div>
+ </div>
+<script>/* core.js — 報告規則（RULES.md）與版面的瀏覽器端實作。
+   逐行移植自 /workspace/reports/all/build_all.py、report_render_all.py、/workspace/site-out/admin/model.py；
+   tests/compare_js_py.py 以 494 份＋隨機修改版本比對兩邊輸出完全一致。 */
+var RPT = (function () {
+"use strict";
+var TODAY = 20261028, BASE_YEAR = 2026, DATE_TXT = "2026/10/28";
+var FREQ = { "年繳": 12, "半年繳": 6, "季繳": 3, "月繳": 1 };
+var SHORTCAT = { CRIT: "重大傷病", DISAB: "失能長照", HOSP: "住院醫療", CANCER: "癌症", ACC_DD: "意外", TERM: "定期壽險", SURG: "手術", ACC_MED: "意外醫療", ACC_HOSP: "意外住院", DISAB_R: "失能附約" };
+var CATNAME = { CRIT: "重大傷病／疾病", DISAB: "失能／長照", DISAB_R: "失能附約", HOSP: "住院醫療", SURG: "手術", CANCER: "癌症", ACC_DD: "意外身故／失能", ACC_MED: "意外醫療", ACC_HOSP: "意外住院", TERM: "定期壽險", LIFE: "終身壽險", SAVE: "增額／還本", INV: "投資型", ANN: "年金" };
+var CATLBL = { LIFE: "壽險", SAVE: "增額／還本壽險", TERM: "定期壽險", INV: "投資型壽險", ANN: "年金", CRIT: "重大傷病／疾病", CANCER: "癌症醫療", DISAB: "失能／長照", DISAB_R: "失能附約", HOSP: "住院醫療", SURG: "手術醫療", HEALTH: "健康／醫療", ACC_DD: "意外身故／失能", ACC_MED: "意外醫療", ACC_HOSP: "意外住院", WAIVER: "豁免保費", UNKNOWN: "商品類型未對照" };
+var ADVISOR = "富邦人壽 \u8521\u6dd1\u60e0", FOOTER_TEXT = "服務人員：富邦人壽 \u8521\u6dd1\u60e0｜僅供參考，以保單條款為準";
+var TH_DEFAULT = { minor_age: 20, senior_age: 65, life_ok: 100e4, life_mid: 30e4, life_ok_senior: 50e4, life_mid_senior: 20e4,
+  acc_ok: 200e4, acc_mid: 100e4, acc_ok_minor: 100e4, acc_mid_minor: 50e4, crit_ok: 100e4, crit_age: 75, disab_age: 80, hh_mid_ratio: 0.3 };
+var TH = {}, GTH = null;
+function setTH(th) { TH = {}; for (var k in TH_DEFAULT) TH[k] = TH_DEFAULT[k]; if (th) for (k in th) if (TH_DEFAULT.hasOwnProperty(k) && th[k] !== null && th[k] !== "" && !isNaN(Number(th[k]))) TH[k] = Number(th[k]); }
+setTH(null);
+var CLOSING = "以上建議都可以依預算與人生階段慢慢調整，有任何疑問都歡迎隨時找我聊聊。";
+
+/* ---------- Python 相容工具 ---------- */
+function pyRound(x) { var f = Math.floor(x), d = x - f; if (d > 0.5) return f + 1; if (d < 0.5) return f; return (f % 2 === 0) ? f : f + 1; }
+function fixed(x, n) {               // Python format(x, '.nf')（n=0/1），處理剛好一半時的「偶數進位」
+  if (n === 0) { if (x - Math.floor(x) === 0.5) return String(pyRound(x)); return x.toFixed(0); }
+  var q = x * 4; if (Number.isInteger(q) && q % 2 !== 0) { return (pyRound(x * 10) / 10).toFixed(1); }
+  return x.toFixed(1);
+}
+function commas(s) { s = String(s); var neg = s[0] === "-"; if (neg) s = s.slice(1); var p = s.split("."); p[0] = p[0].replace(/\B(?=(\d{3})+(?!\d))/g, ","); return (neg ? "-" : "") + p.join("."); }
+function int(x) { return Math.trunc(x); }
+function cp(s) { return Array.from(s); }
+function clen(s) { return Array.from(s).length; }
+function cut(s, n) { return Array.from(s).slice(0, n).join(""); }
+function sum(a) { var t = 0; for (var i = 0; i < a.length; i++) t += a[i]; return t; }
+function D(s) { if (!s) return null; var p = s.split("-"); return +p[0] * 10000 + (+p[1]) * 100 + (+p[2]); }
+function yr(d) { return Math.floor(d / 10000); }
+function mo(d) { return Math.floor(d / 100) % 100; }
+function dy(d) { return d % 100; }
+function addMonths(d, n) { var y0 = yr(d), m0 = mo(d), dd = dy(d); var t = m0 - 1 + n; var y = y0 + Math.floor(t / 12), m = ((t % 12) + 12) % 12 + 1; var last = new Date(Date.UTC(y, m, 0)).getUTCDate(); return y * 10000 + m * 100 + Math.min(dd, last); }
+function pad2(n) { return (n < 10 ? "0" : "") + n; }
+function rocs(d) { return d ? (yr(d) - 1911) + "/" + pad2(mo(d)) + "/" + pad2(dy(d)) : "—"; }
+function fmtNt(v) { if (v >= 10000) { var w = v / 10000; return Math.abs(w - pyRound(w)) < 0.05 ? commas(int(w)) + "萬" : commas(fixed(w, 1)) + "萬"; } return commas(int(v)) + "元"; }
+function wan(v) { return fmtNt(v); }
+function money(n) { return commas(int(pyRound(n))); }
+function yrAge(y, a) { return a + (y - BASE_YEAR); }
+function pol4(c) { return c.slice(-3) === "-00" ? c.slice(0, -3) : c; }
+var PUA = /[\ue000-\uf8ff]/g;
+function san(s) { return typeof s === "string" ? s.replace(PUA, "□") : s; }
+function clone(o) { return JSON.parse(JSON.stringify(o)); }
+
+/* ---------- 模型 → 計算用結構 ---------- */
+function derive(P) {
+  P.live = P.items.filter(function (x) { return !x.bad; });
+  if (P.no_detail) { P.step = null; P.ongoing = []; P.period_prem = 0; P.annual = 0; P.prem_unknown = false; return P; }
+  var step = FREQ[P.freq_txt] || null; P.step = step;
+  P.ongoing = P.live.filter(function (x) { return x.prem > 0 && x.pay_end && x.pay_end > TODAY && step; });
+  P.period_prem = sum(P.ongoing.map(function (x) { return x.prem; }));
+  P.annual = step ? P.period_prem * (12 / step) : 0;
+  P.prem_unknown = !!(P.ongoing.length === 0 && P.pay_end && P.pay_end > TODAY && P.freq_txt !== "躉繳");
+  if (P.freq_txt === "彈性繳") P.flex = true; else delete P.flex;
+  return P;
+}
+function toC(M) {
+  var pols = M.policies.map(function (p) {
+    var P = clone(p); P.start = D(p.start); P.pay_end = D(p.pay_end);
+    P.items.forEach(function (x) { x.pay_end = D(x.pay_end); x.cov_end = D(x.cov_end); });
+    return derive(P);
+  });
+  var k1 = function (p) { return p.cur === "NT" ? -p.annual : 0; };
+  pols.sort(function (a, b) { var x = k1(a), y = k1(b); if (x !== y) return x < y ? -1 : 1; return a.code < b.code ? -1 : a.code > b.code ? 1 : 0; });
+  var k2 = function (p) { return (p.annual > 0 && p.cur === "NT") ? 0 : 1; };
+  pols.sort(function (a, b) { return k2(a) - k2(b); });
+  return { name: M.name, age: parseInt(M.age, 10), policies: pols, flags: (M.flags || []).slice() };
+}
+
+function paymentsByYear(P) {
+  var out = new Map();
+  if (!P.step || !P.start) return out;
+  P.ongoing.forEach(function (x) {
+    for (var k = 0; ; k++) {
+      var dt = addMonths(P.start, k * P.step);
+      if (dt >= x.pay_end || yr(dt) > 2110) break;
+      if (yr(dt) >= BASE_YEAR) out.set(yr(dt), (out.get(yr(dt)) || 0) + x.prem);
+    }
+  });
+  return out;
+}
+function payMonths(P) {
+  if (!P.step || !P.start) return null;
+  var s = {}; for (var j = 0; j < 12 / P.step; j++) s[((mo(P.start) - 1 + j * P.step) % 12) + 1] = 1;
+  return Object.keys(s).map(Number).sort(function (a, b) { return a - b; });
+}
+function endInfo(x, a) { if (x.life) return ["life", null, null]; if (x.cov_end) return ["term", yr(x.cov_end), yrAge(yr(x.cov_end), a)]; return ["unk", null, null]; }
+
+function analyze(C) {
+  var age = C.age, A = {}, cats = new Map();
+  C.policies.forEach(function (P) { P.live.forEach(function (x) { if (x.dep || x.cat === "WAIVER") return; if (!cats.has(x.cat)) cats.set(x.cat, []); cats.get(x.cat).push([P, x]); }); });
+  var g = function (c) { return cats.get(c) || []; };
+  A.cats = cats; A.g = g;
+  var lifeP = [].concat(g("LIFE"), g("SAVE"), g("TERM")).filter(function (t) { return t[1].amt_kind === "NT" || t[1].amt_kind === "USD"; });
+  var S = function (arr, f) { return sum(arr.filter(f).map(function (t) { return t[1].amt; })); };
+  A.life_nt = S(lifeP, function (t) { return t[0].cur === "NT" && t[1].amt_kind === "NT"; });
+  A.life_usd = S(lifeP, function (t) { return t[1].amt_kind === "USD" || t[0].cur === "USD"; });
+  A.life_forever = S(lifeP, function (t) { return t[0].cur === "NT" && t[1].amt_kind === "NT" && (t[1].cat === "LIFE" || t[1].cat === "SAVE"); });
+  A.life_term = S(lifeP, function (t) { return t[0].cur === "NT" && t[1].amt_kind === "NT" && t[1].cat === "TERM"; });
+  A.inv_nt = S(g("INV"), function (t) { return t[1].amt_kind === "NT" && t[0].cur === "NT" && t[1].main; });
+  A.acc_dd = S(g("ACC_DD"), function (t) { return t[1].amt_kind === "NT" && t[0].cur === "NT"; });
+  A.acc_med = S(g("ACC_MED"), function (t) { return t[1].amt_kind === "NT" && t[0].cur === "NT"; });
+  var exp = new Map();
+  ["CRIT", "DISAB", "DISAB_R", "HOSP", "SURG", "CANCER", "ACC_DD", "ACC_MED", "ACC_HOSP", "TERM"].forEach(function (c) {
+    g(c).forEach(function (t) { var e = endInfo(t[1], age); if (e[0] === "term") { if (!exp.has(c) || e[1] < exp.get(c)[0]) exp.set(c, [e[1], e[2]]); } });
+  });
+  A.exp = exp;
+  A.has_life_cov = {};
+  ["CRIT", "DISAB", "HOSP", "SURG", "CANCER", "ACC_DD", "TERM"].forEach(function (c) { A.has_life_cov[c] = g(c).some(function (t) { return endInfo(t[1], age)[0] === "life"; }); });
+  return A;
+}
+
+function levelRows(C, A) {
+  var age = C.age, g = A.g, rows = [], minor = age < TH.minor_age, senior = age >= TH.senior_age;
+  var ln = A.life_nt, lu = A.life_usd, th = minor ? [null, null] : (senior ? [TH.life_ok_senior, TH.life_mid_senior] : [TH.life_ok, TH.life_mid]), lvl, ex;
+  if (ln === 0 && lu === 0) rows.push({ name: "壽險", level: minor ? "mid" : "low", val: "無", note: minor ? "未成年人身故給付依法有限制，目前沒有壽險保障屬常見情形" : "明細頁沒有看到壽險（身故）保障" });
+  else {
+    if (minor) lvl = "ok"; else if (ln >= th[0]) lvl = "ok"; else if (ln >= th[1]) lvl = "mid"; else if (ln === 0 && lu > 0) lvl = "mid"; else lvl = "low";
+    var parts = [];
+    if (A.life_forever) parts.push("終身型 " + wan(A.life_forever));
+    if (A.life_term) { ex = A.exp.get("TERM"); parts.push("定期 " + wan(A.life_term) + (ex ? "（至 " + ex[0] + " 年）" : "")); }
+    if (lu) parts.push("另有美元 " + commas(int(lu)));
+    if (A.inv_nt) parts.push("投資型另計 " + wan(A.inv_nt));
+    rows.push({ name: "壽險", level: lvl, val: ln ? wan(ln) : "美元 " + commas(int(lu)), note: parts.join("；") + (lvl !== "ok" ? "；額度可對照家庭責任檢視" : "") });
+  }
+  var dd = A.acc_dd, md = A.acc_med, okt = minor ? TH.acc_ok_minor : TH.acc_ok, midt = minor ? TH.acc_mid_minor : TH.acc_mid;
+  ex = A.exp.get("ACC_DD");
+  if (dd === 0) rows.push({ name: "意外保障", level: "low", val: g("ACC_DD").length === 0 ? "無" : "金額未顯示", note: g("ACC_DD").length === 0 ? "明細頁沒有看到意外身故／失能保障" : "有意外附約，但保額明細頁未顯示，需對照條款" });
+  else {
+    lvl = dd >= okt ? "ok" : (dd >= midt ? "mid" : "low");
+    var n = md ? "意外醫療 " + wan(md) + "；" : "";
+    n += ex ? "意外身故／失能附約至 " + ex[0] + " 年（" + ex[1] + "歲）" : "期間依條款";
+    rows.push({ name: "意外保障", level: lvl, val: "死殘約 " + wan(dd), note: n });
+  }
+  var hosp = [].concat(g("HOSP"), g("HEALTH"), g("SURG"));
+  if (hosp.length === 0) rows.push({ name: "住院醫療", level: "low", val: "無", note: "明細頁沒有看到住院日額、實支實付或定額醫療保障" });
+  else {
+    var lifeh = hosp.filter(function (t) { return endInfo(t[1], age)[0] === "life"; });
+    var terms = hosp.filter(function (t) { return endInfo(t[1], age)[0] === "term"; });
+    var exh = A.exp.get("HOSP"), sub = [];
+    if (lifeh.length) sub.push("含終身型");
+    if (terms.length) sub.push("定期附約" + (exh ? "至 " + exh[0] + " 年（" + exh[1] + "歲）" : ""));
+    var names = []; hosp.forEach(function (t) { if (names.indexOf(t[1].short) < 0) names.push(t[1].short); });
+    var val = names.length > 2 ? hosp.length + " 項保障" : names.map(function (x) { return x.split("附約").join(""); }).join("、");
+    rows.push({ name: "住院醫療", level: lifeh.length ? "ok" : "mid", val: cut(val, 16), note: sub.join("；") + "；給付金額以條款為準" });
+  }
+  var crit = g("CRIT");
+  if (crit.length === 0) rows.push({ name: "重大傷病", level: "low", val: "無", note: "明細頁沒有看到重大傷病或重大疾病一次給付" });
+  else {
+    var amt = sum(crit.filter(function (t) { return t[1].amt_kind === "NT" && t[0].cur === "NT"; }).map(function (t) { return t[1].amt; }));
+    ex = A.exp.get("CRIT"); var lifec = A.has_life_cov.CRIT;
+    lvl = (amt >= TH.crit_ok && (lifec || !ex || ex[1] >= TH.crit_age)) ? "ok" : "mid";
+    var note = (lifec ? "含終身型保障；" : "") + (ex ? "定期保障至 " + ex[0] + " 年（" + ex[1] + "歲）；" : "") + (amt ? "" : "給付金額明細頁未顯示；") + "給付項目以條款為準";
+    rows.push({ name: "重大傷病", level: lvl, val: amt ? "保額 " + wan(amt) : "金額未顯示", note: note });
+  }
+  var ca = g("CANCER");
+  if (ca.length === 0) rows.push({ name: "癌症", level: "low", val: "無", note: "明細頁沒有看到防癌或癌症醫療保障" });
+  else {
+    var lc = ca.some(function (t) { return endInfo(t[1], age)[0] === "life"; });
+    ex = A.exp.get("CANCER");
+    var units = ca.filter(function (t) { return t[1].amt_txt; }).map(function (t) { return t[1].amt_txt; }).slice(0, 2);
+    rows.push({ name: "癌症", level: lc ? "ok" : "mid", val: cut(units.length ? units.join("、") : "有保障", 16), note: (lc ? "含終身型；" : "") + (ex ? "定期至 " + ex[0] + " 年（" + ex[1] + "歲）；" : "") + "確診與治療給付金額以條款為準" });
+  }
+  var di = g("DISAB"), dr = g("DISAB_R"), exd;
+  if (di.length === 0 && dr.length === 0) rows.push({ name: "失能／長照", level: "low", val: "無", note: "明細頁沒有看到失能扶助或長期照顧給付" });
+  else if (di.length) {
+    var lifed = di.some(function (t) { return endInfo(t[1], age)[0] === "life"; });
+    exd = A.exp.get("DISAB");
+    var amts = di.filter(function (t) { return t[1].amt_kind === "NT" && t[0].cur === "NT" && t[1].main; }).map(function (t) { return t[1].amt; });
+    lvl = (lifed || (exd && exd[1] >= TH.disab_age)) ? "ok" : "mid";
+    var v2 = amts.length ? di.length + " 項・保額 " + wan(sum(amts)) : di.length + " 項保障";
+    rows.push({ name: "失能／長照", level: lvl, val: cut(v2, 16), note: (lifed ? "含終身型失能照護；" : "") + (exd ? "定期保障至 " + exd[0] + " 年（" + exd[1] + "歲）；" : "") + "給付內容以條款為準" });
+  } else {
+    exd = A.exp.get("DISAB_R");
+    rows.push({ name: "失能／長照", level: "mid", val: "失能附約", note: "僅有一年期等失能附約" + (exd ? "，至 " + exd[0] + " 年（" + exd[1] + "歲）" : "") + "；沒有每月扶助金型保障" });
+  }
+  var mainOf = function (c) { return g(c).filter(function (t) { return t[1].main; }); };
+  var inv = mainOf("INV"), ann = mainOf("ANN"), sav = mainOf("SAVE");
+  if (inv.length || ann.length) {
+    var t2 = []; if (inv.length) t2.push("投資型 " + inv.length + " 張"); if (ann.length) t2.push("年金 " + ann.length + " 張");
+    rows.push({ name: (inv.length && ann.length) ? "投資型／年金" : (inv.length ? "投資型保單" : "年金保險"), level: "mid", val: t2.join("・"), note: "價值隨帳戶或市場變動，明細頁未顯示帳戶價值；建議確認最新帳戶價值與費用" });
+  } else if (sav.length) rows.push({ name: "增額／還本", level: "ok", val: sav.length + " 張", note: "終身型儲蓄保障，具長期累積性質；給付與保單價值以條款為準" });
+  return rows;
+}
+
+function buildStats(C, A, rows, sums) {
+  var exp = A.exp, age = C.age;
+  var keyc = ["CRIT", "DISAB", "HOSP", "CANCER", "ACC_DD", "TERM"].filter(function (c) { return exp.has(c); });
+  var nt = sums.annual_nt, usd = sums.annual_usd, s2, s3, s4;
+  if (nt > 0) s2 = { v: commas(int(pyRound(nt))), l: "年繳保費（元）" };
+  else if (usd > 0) s2 = { v: "US$" + commas(int(pyRound(usd))), l: "年繳保費（美元）" };
+  else if (C.policies.some(function (P) { return P.prem_unknown; })) s2 = { v: "未顯示", l: "年繳保費" };
+  else s2 = { v: "0", l: "年繳保費（已繳畢）" };
+  if (A.life_nt) s3 = { v: wan(A.life_nt), l: "壽險保額合計" };
+  else if (A.life_usd) s3 = { v: "US$" + commas(int(A.life_usd)), l: "壽險保額（美元）" };
+  else s3 = { v: "無", l: "壽險保額", tone: age >= TH.minor_age ? "alert" : null };
+  if (keyc.length) {
+    var c = keyc[0]; keyc.forEach(function (k) { if (exp.get(k)[0] < exp.get(c)[0]) c = k; });
+    var y = exp.get(c)[0];
+    s4 = { v: String(y), l: c !== "TERM" ? SHORTCAT[c] + "保障屆滿" : "定期壽險屆滿" };
+    if (y - BASE_YEAR <= 10) s4.tone = "alert";
+  } else {
+    var lows = rows.filter(function (r) { return r.level === "low" && r.val === "無"; });
+    if (s3.v === "無" && lows.filter(function (r) { return r.name !== "壽險"; }).length) lows = lows.filter(function (r) { return r.name !== "壽險"; });
+    var lowa = rows.filter(function (r) { return r.level === "low" && r.val !== "無"; });
+    if (lows.length) s4 = { v: "無", l: lows[0].name.split("保障").join("") + "保障", tone: "alert" };
+    else if (lowa.length) s4 = { v: cut(lowa[0].val, 8), l: lowa[0].name.split("保障").join("") + "額度偏低", tone: "alert" };
+    else s4 = { v: "終身", l: "保障多為終身型" };
+  }
+  return [{ v: String(C.policies.length), l: "張有效保單" }, s2, s3, s4];
+}
+
+function computeSums(C) {
+  var usd = 0, a_nt = 0, by = new Map();
+  C.policies.forEach(function (P) {
+    if (P.cur === "NT") { a_nt += P.annual; paymentsByYear(P).forEach(function (v, y) { by.set(y, (by.get(y) || 0) + v); }); }
+    else usd += P.annual;
+  });
+  return { annual_nt: a_nt, annual_usd: usd, by_year: by };
+}
+
+function trendBlock(C, sums) {
+  var by = sums.by_year, age = C.age, ys = [];
+  for (var y = BASE_YEAR; y < 2111; y++) if ((by.get(y) || 0) > 0) ys.push(y);
+  if (!ys.length) return { bars: [{ range: "目前", amount: 0 }], note: "目前沒有應繳的台幣保費（皆已繳畢、躉繳或僅美元保單）；年齡依保險年齡簡算。" };
+  var last = Math.max.apply(null, ys), seg = [];
+  for (y = BASE_YEAR; y <= last; y++) { var a = pyRound(by.get(y) || 0); if (seg.length && seg[seg.length - 1][2] === a) seg[seg.length - 1][1] = y; else seg.push([y, y, a]); }
+  var merged = false;
+  while (seg.length > 7) {
+    var best = null, bi = 0;
+    for (var i = 0; i < seg.length - 1; i++) { var p = seg[i][2], q = seg[i + 1][2], r = Math.abs(p - q) / Math.max(p, q, 1); if (best === null || r < best) { best = r; bi = i; } }
+    seg.splice(bi, 2, [seg[bi][0], seg[bi + 1][1], Math.max(seg[bi][2], seg[bi + 1][2])]); merged = true;
+  }
+  var bars = seg.map(function (s) { var aa = yrAge(s[0], age), ab = yrAge(s[1], age); return { range: aa === ab ? aa + "歲" : aa + "–" + ab + "歲", amount: int(s[2]) }; });
+  if (last < 2110 && yrAge(last + 1, age) <= 105) bars.push({ range: yrAge(last + 1, age) + "歲後", amount: 0 });
+  return { bars: bars, note: "依明細頁各項保費與繳費期滿日推算（台幣，美元保單不計入）；" + (merged ? "相近年度已合併、區間取最高年度金額；" : "") + "年齡依保險年齡簡算（2026 年＝" + age + " 歲）。實際以繳費通知為準。" };
+}
+
+function paymentsBlock(C) {
+  var rows = [], details = [], pend = [], nm = san(C.name);
+  C.policies.forEach(function (P) {
+    var lab = "…" + pol4(P.code);
+    if (P.no_detail) { pend.push(lab); details.push(lab + "：繳別、扣款月份明細頁未顯示（待確認）"); rows.push({ insured: nm, policy: lab, amount: 0, day: 0, months: [], method: "待確認", pending: true }); return; }
+    if (P.freq_txt === "躉繳") { details.push(lab + "：躉繳（一次繳清），無年度扣款"); return; }
+    if (P.flex && (P.pay_end && P.pay_end > TODAY)) { pend.push(lab); details.push(lab + "：彈性繳，扣款月份與金額待確認"); rows.push({ insured: nm, policy: lab, amount: 0, day: 0, months: [], method: "待確認", pending: true }); return; }
+    if (!P.ongoing.length) { if (P.prem_unknown) { pend.push(lab); details.push(lab + "：繳費期間內但明細頁未顯示保費（待確認）"); } return; }
+    var months = payMonths(P);
+    if (!months) { pend.push(lab); details.push(lab + "：缺少契約始期，扣款月份待確認"); return; }
+    var usd = P.cur === "USD";
+    var row = { insured: nm, policy: lab, amount: int(pyRound(P.period_prem)), day: dy(P.start), months: months, method: P.method };
+    if (usd) row.currency = "USD";
+    rows.push(row);
+    var when = months.length === 12 ? "每月 " + row.day + " 日" : months.map(function (m) { return m + "月"; }).join("、") + " " + row.day + " 日";
+    details.push(lab + "：" + P.freq_txt + "・" + when + "（依契約始期推算）・" + P.method + "（每次 " + (usd ? "美元 " : "") + commas(row.amount) + " 元）");
+  });
+  var zero = C.policies.filter(function (P) { return !P.ongoing.length && !P.prem_unknown && !P.no_detail && P.freq_txt !== "躉繳"; }).map(function (P) { return "…" + pol4(P.code); });
+  if (zero.length) details.push("無應繳保費：" + zero.slice(0, 8).join("、") + (zero.length > 8 ? "等" : "") + "（已繳畢或繳費期滿）。");
+  var note = "色塊月份為扣款月（依繳別與契約始期月份推算）；<b>實際扣款日待確認</b>，以銀行／信用卡帳單為準。" + (rows.some(function (r) { return r.currency; }) ? "藍色為美元，不計入台幣合計。" : "") + (pend.length ? "「待確認」表示明細頁資料不足。" : "");
+  return { compact: true, rows: rows, details: details, note: note };
+}
+
+function groupItems(pairs, age, limit) {
+  limit = limit || 6; var gmap = new Map();
+  pairs.forEach(function (t) { var key = t[1].code || t[1].short; if (!gmap.has(key)) gmap.set(key, []); gmap.get(key).push(t); });
+  var rows = [];
+  gmap.forEach(function (lst, key) {
+    var x0 = lst[0][1], amts = [];
+    lst.forEach(function (t) { var s = t[1].amt_txt || "金額未顯示"; if (t[0].cur === "USD" && s && s.indexOf("美元") !== 0) s = "美元 " + s; if (amts.indexOf(s) < 0) amts.push(s); });
+    var ends = lst.map(function (t) { return endInfo(t[1], age); }), endt;
+    if (ends.every(function (e) { return e[0] === "life"; })) endt = "終身";
+    else {
+      var ys = ends.filter(function (e) { return e[0] === "term"; }).map(function (e) { return e[1]; });
+      endt = ys.length ? "至 " + Math.max.apply(null, ys) + " 年" : "期間未顯示";
+      if (ends.some(function (e) { return e[0] === "life"; })) endt = "含終身，" + endt;
+    }
+    var lab = key + " " + x0.short.split("附約").join("").trim();
+    if (clen(lab) > 21) lab = cut(lab, 21) + "…";
+    rows.push([lab, amts.slice(0, 2).join("／") + "（" + endt + "）"]);
+  });
+  if (rows.length > limit) rows = rows.slice(0, limit - 1).concat([["其他 " + (rows.length - limit + 1) + " 項", "詳保單一覽"]]);
+  return rows;
+}
+
+function medicalBlock(C, A) {
+  var g = A.g, age = C.age, s1, s2, s3;
+  var crit = g("CRIT"), ca = g("CANCER");
+  var before = groupItems(crit.concat(ca), age); if (!before.length) before = [["目前沒有", "明細頁未見"]];
+  if (crit.length && ca.length) s1 = "確診階段有 <b>重大傷病／疾病</b> 與 <b>癌症</b> 兩類保障；各項給付金額以保單條款為準。";
+  else if (crit.length) s1 = "確診階段有 <b>重大傷病／疾病</b> 保障，但沒有看到癌症專屬給付。";
+  else if (ca.length) s1 = "確診階段有 <b>癌症</b> 保障，但沒有看到重大傷病／疾病一次給付。";
+  else s1 = "目前沒有看到 <b>重大傷病、重大疾病或癌症</b> 的確診給付，確診初期的檢查與自費項目需先自行準備。";
+  var hos = [].concat(g("HOSP"), g("HEALTH"), g("SURG")), acm = [].concat(g("ACC_MED"), g("ACC_HOSP"));
+  var mid = groupItems(hos.concat(acm), age); if (!mid.length) mid = [["目前沒有", "明細頁未見"]];
+  if (hos.length) {
+    var lifeh = hos.some(function (t) { return endInfo(t[1], age)[0] === "life"; }), exh = A.exp.get("HOSP");
+    s2 = "住院與手術有 <b>" + (lifeh ? "終身型" : "定期") + "住院醫療</b> 保障" + (exh ? "，定期部分在 <b>" + exh[0] + " 年</b>（" + exh[1] + "歲）起陸續屆滿" : "") + "；金額以條款為準。";
+  } else if (acm.length) s2 = "沒有看到住院醫療保障，僅有 <b>意外</b> 相關醫療給付。";
+  else s2 = "目前沒有看到 <b>住院醫療</b>（日額、實支實付或定額）保障，住院與手術費用需自行負擔差額。";
+  var dis = [].concat(g("DISAB"), g("DISAB_R"), g("ACC_DD"));
+  var after = groupItems(dis, age); if (!after.length) after = [["目前沒有", "明細頁未見"]];
+  if (g("DISAB").length) s3 = "復原與長期照顧階段有 <b>失能／長照</b> 給付，可補足收入中斷時的生活與照護費用。";
+  else if (g("DISAB_R").length || g("ACC_DD").length) s3 = "復原階段僅有 <b>失能附約或意外失能</b> 給付，沒有看到每月給付的扶助金型保障。";
+  else s3 = "目前沒有看到 <b>失能扶助或長期照顧</b> 給付，復原期的收入與照護費用需自行承擔。";
+  return [{ title: "前｜檢查．確診", sentence: s1, rows: before }, { title: "中｜住院．手術", sentence: s2, rows: mid }, { title: "後｜失能．長照．收入", sentence: s3, rows: after }];
+}
+
+function timelineBlock(C, A) {
+  var g = A.g, age = C.age, END = 100, rows = [];
+  function mk(name, src, kind, ea, label) { rows.push({ name: name, src: cut(src, 18), kind: kind, end_age: ea, label: label }); }
+  function codes(pairs) { var seen = []; pairs.forEach(function (t) { if (seen.indexOf(t[1].code) < 0) seen.push(t[1].code); }); return seen.slice(0, 4).join("・"); }
+  function catRows(label, pairs, noneLabel, allowNone) {
+    if (!pairs.length) { if (allowNone) mk(noneLabel || label, "目前無", "none", null, "無保障"); return; }
+    var lf = pairs.filter(function (t) { return endInfo(t[1], age)[0] === "life"; });
+    var tm = pairs.filter(function (t) { return endInfo(t[1], age)[0] === "term"; });
+    var un = pairs.filter(function (t) { return endInfo(t[1], age)[0] === "unk"; });
+    if (lf.length) mk(label, codes(lf), "life", END, "終身 ▶");
+    if (tm.length) {
+      var ys = tm.map(function (t) { return yr(t[1].cov_end); }), mny = Math.min.apply(null, ys), mxy = Math.max.apply(null, ys), ea, k, lab;
+      if (mny - BASE_YEAR <= 10) { ea = Math.min(END, yrAge(mny, age)); k = "warn"; lab = mny === mxy ? mny + " 到期（" + yrAge(mny, age) + "歲）" : mny + " 起陸續到期（" + yrAge(mny, age) + "歲）"; }
+      else { k = "mid"; ea = Math.min(END, yrAge(mxy, age)); lab = mny === mxy ? "至 " + ea + " 歲" : yrAge(mny, age) + "–" + ea + " 歲屆滿"; }
+      mk(label + (lf.length ? "（定期）" : ""), codes(tm), k, ea, lab);
+    }
+    if (un.length && !lf.length && !tm.length) mk(label, codes(un), "yr", END, "期間明細頁未顯示");
+  }
+  catRows("壽險（終身）", [].concat(g("LIFE"), g("SAVE")));
+  catRows("定期壽險", g("TERM"));
+  catRows("失能照護", g("DISAB"), "失能／長照", true);
+  catRows("失能附約", g("DISAB_R"));
+  catRows("重大傷病", g("CRIT"), "重大傷病", true);
+  catRows("癌症保障", g("CANCER"), "癌症保障", true);
+  catRows("住院醫療", [].concat(g("HOSP"), g("HEALTH"), g("SURG")), "住院醫療", true);
+  catRows("意外保障", [].concat(g("ACC_DD"), g("ACC_MED"), g("ACC_HOSP")), "意外保障", true);
+  if (g("INV").length) mk("投資型壽險", codes(g("INV")), "yr", END, "依帳戶價值，待確認");
+  if (g("ANN").length) mk("年金保險", codes(g("ANN")), "yr", END, "依條款，待確認");
+  function drop(pred) { for (var i = rows.length - 1; i >= 0; i--) { if (rows.length <= 11) return; if (pred(rows[i])) rows.splice(i, 1); } }
+  drop(function (r) { return r.name === "失能附約"; });
+  drop(function (r) { return r.kind === "none" && (r.name === "意外保障" || r.name === "癌症保障"); });
+  drop(function (r) { return /（定期）$/.test(r.name) && r.name.indexOf("住院") !== 0; });
+  drop(function (r) { return r.kind === "none"; });
+  drop(function (r) { return r.kind === "yr"; });
+  rows = rows.slice(0, 11);
+  var a0 = age, cs = {};
+  rows.forEach(function (r) { if ((r.kind === "mid" || r.kind === "warn") && r.end_age && a0 < r.end_age && r.end_age < END) cs[r.end_age] = 1; });
+  var cand = Object.keys(cs).map(Number).sort(function (a, b) { return a - b; });
+  var wid = 262 / (END - a0), mingap = Math.ceil(36 / wid), ticks = [a0];
+  cand.forEach(function (c) { if (c - ticks[ticks.length - 1] >= mingap && (END - c) >= mingap && ticks.length < 4) ticks.push(c); });
+  if (END - ticks[ticks.length - 1] >= mingap) ticks.push(END);
+  var warn = rows.filter(function (r) { return r.kind === "warn" && ticks.indexOf(r.end_age) >= 0; }).map(function (r) { return r.end_age; });
+  var t = { base_year: BASE_YEAR, base_age: a0, end_age: END, ticks: ticks, row_h: 31, rows: rows };
+  if (warn.length) t.warn_age = Math.min.apply(null, warn);
+  return t;
+}
+
+function covTxt(x) { if (x.life) return "終身"; return x.cov_end ? "至 " + rocs(x.cov_end) : "期間明細頁未顯示"; }
+function policyCard(i, C, P) {
+  var code4 = pol4(P.code);
+  var nm = P.mname.split("富邦人壽").join("").split("（ＨＳＣ５）").join("").trim() || P.mname;
+  var name = (nm + " " + P.mcode + "（…" + code4 + "）").split("  ").join(" ");
+  if (P.no_detail) return { no: i, company: P.company, name: name, period: "明細頁未取得（系統無權限查詢）", status: P.status, premium: 0, premium_text: "明細缺漏", occupation: "明細頁未顯示", beneficiary: "明細頁未顯示",
+    items: ["主約 " + (CATLBL[P.mcat] || "") + "；保額 " + (P.items[0].amt_txt || "明細頁未顯示") + "；其餘附約、繳別、保費皆明細頁未顯示"] };
+  var period = rocs(P.start) + " 起・" + (P.freq_txt || "繳別未顯示") + "・" + (P.pay_end ? "繳費至 " + rocs(P.pay_end) : "繳費期間未顯示") + "・保障" + (P.cov_txt === "終身" ? P.cov_txt : (P.cov_txt ? "至 " + P.cov_txt : "期間未顯示"));
+  var items = [];
+  P.items.forEach(function (x) {
+    if (x.bad) return;
+    var lbl = CATLBL[x.cat] || "", amt = x.amt_txt ? "保額 " + x.amt_txt : "保額明細頁未顯示";
+    if (x.main) { var tail = "；" + covTxt(x); if (x.status === "繳費期滿" || x.status === "繳清") tail += "（" + x.status + "）"; items.push(("主約 " + lbl + "；" + amt + tail).split("；；").join("；")); }
+    else if (x.dep) items.push(x.code + " " + x.short + "（眷屬" + (x.rel ? "・" + x.rel : "") + "，非本人保障）");
+    else {
+      var pm = x.prem > 0 ? "（" + (P.cur === "USD" ? "美元 " : "") + commas(int(x.prem)) + "／" + (P.freq_txt || "期") + "）" : "";
+      items.push(x.code + " " + x.short + (x.amt_txt ? " " + x.amt_txt : "") + pm + "・" + covTxt(x));
+    }
+  });
+  var pt;
+  if (P.cur === "USD") pt = P.annual ? "US$" + commas(int(pyRound(P.annual))) + "<small>/年</small>" : (P.prem_unknown ? "保費未顯示" : (P.freq_txt === "躉繳" ? "躉繳" : "已繳畢"));
+  else if (P.freq_txt === "躉繳") pt = "躉繳";
+  else if (P.flex && !P.ongoing.length) pt = "彈性繳";
+  else if (P.prem_unknown) pt = "保費未顯示";
+  else if (P.annual <= 0) pt = "已繳畢";
+  else pt = null;
+  var d = { no: i, company: P.company, name: name, period: period, status: P.status, premium: P.cur === "NT" ? P.annual : 0, occupation: P.occ_txt, beneficiary: P.ben, items: items };
+  if (pt) d.premium_text = pt;
+  return d;
+}
+
+function gapsBlock(C, A, rows, sums) {
+  var age = C.age, g = A.g, exp = A.exp, hi = [], mid = [], conf = [], keep = [], lv = {};
+  rows.forEach(function (r) { lv[r.name] = r; });
+  var near = ["HOSP", "SURG", "CRIT", "CANCER", "DISAB", "ACC_DD", "ACC_MED", "TERM"].filter(function (c) { return exp.has(c) && exp.get(c)[0] - BASE_YEAR <= 15; }).map(function (c) { return [c, exp.get(c)]; });
+  if (near.length) {
+    near.sort(function (a, b) { return a[1][0] - b[1][0]; });
+    var names = near.slice(0, 4).map(function (t) { return (SHORTCAT[t[0]] || CATNAME[t[0]] || t[0]) + " <b>" + t[1][0] + " 年（" + t[1][1] + " 歲）</b>"; }).join("、");
+    var soon = near[0][1][0] - BASE_YEAR <= 10;
+    (soon ? hi : mid).push({ title: "定期保障屆滿前的銜接", tag: soon ? "優先" : "建議", body: "目前有定期型保障將陸續屆滿：" + names + "。屆滿後該段保障就不再延續，建議在屆滿前 3–5 年對照條款，確認是否可續保、改保，或是否還需要補上同類保障。" });
+  }
+  var miss = [["CRIT", "重大傷病／重大疾病一次給付", "確診重大傷病時，一次給付的現金可以支應治療期間的收入中斷與自費項目。建議先確認：目前的住院、癌症保障是否已涵蓋你在意的情境，再決定是否需要補上，額度可以從 6–12 個月生活費抓起。"],
+    ["HOSP", "住院醫療保障", "住院日額、實支實付或手術給付，能降低住院時自費差額與看護費用的壓力。建議先確認健保以外自費項目的可能花費，以及家人能否協助看護，再決定需要日額型或實支實付型哪一種。"],
+    ["DISAB", "失能／長期照顧保障", "失能或長期照顧的支出是長期且持續的，通常比單次醫療費用更難負擔。建議先和家人討論照顧的安排與預算，再確認是否需要每月給付型的保障。"],
+    ["CANCER", "癌症保障", "癌症治療期間長、自費項目多，確診時的一次給付與治療期間的給付各有用途。建議先確認重大傷病或其他保障是否已涵蓋癌症，再決定是否需要專屬的癌症保障。"],
+    ["ACC_DD", "意外身故／失能保障", "意外造成的身故或失能，對收入與家庭影響很大，保費通常也相對親民。建議先確認目前的職業等級與收入需求，再決定保額。"]];
+  miss.forEach(function (m) {
+    var cat = m[0], has;
+    if (cat === "HOSP") has = g("HOSP").length > 0 || g("HEALTH").length > 0 || g("SURG").length > 0;
+    else if (cat === "ACC_DD") has = g("ACC_DD").length > 0;
+    else if (cat === "DISAB") has = g("DISAB").length > 0 || g("DISAB_R").length > 0;
+    else has = g(cat).length > 0;
+    if (!has) {
+      if (cat === "ACC_DD" && age < 6) return;
+      if (cat === "CRIT" && !g("CANCER").length && age >= TH.minor_age) hi.push({ title: "補強" + m[1], tag: "優先", body: m[2] });
+      else if (cat === "HOSP") hi.push({ title: "補強" + m[1], tag: "優先", body: m[2] });
+      else mid.push({ title: "檢視" + m[1], tag: "建議", body: m[2] });
+    }
+  });
+  var lifeLv = lv["壽險"] ? lv["壽險"].level : undefined;
+  if ((lifeLv === "low" || lifeLv === "mid") && A.life_nt + A.life_usd > 0 && age >= TH.minor_age)
+    mid.push({ title: "壽險額度與家庭責任", tag: "建議", body: "目前壽險保額約 <b>" + wan(A.life_nt) + "</b>" + (A.life_usd ? "（另有美元保單）" : "") + "。是否足夠取決於家庭責任（房貸、扶養、教育金）；建議先盤點這些固定支出，再決定是否需要調整，不必急著增加。" });
+  else if (lifeLv === "low" && age >= TH.minor_age && A.life_nt + A.life_usd === 0)
+    mid.push({ title: "壽險是否需要", tag: "建議", body: "目前沒有身故保障。若沒有需要扶養的家人或房貸，這不一定是缺口；若有，建議先盤點家庭責任，再決定需要的額度與期間。" });
+  var accLv = lv["意外保障"] ? lv["意外保障"].level : undefined;
+  if ((accLv === "low" || accLv === "mid") && g("ACC_DD").length && A.acc_dd && A.acc_dd < TH.acc_ok)
+    mid.push({ title: "意外保額是否足夠", tag: "建議", body: "目前意外死殘約 <b>" + wan(A.acc_dd) + "</b>。建議對照收入與家庭責任，確認是否足夠；職業等級也會影響保障內容，請以最新職業類別確認。" });
+  var inv = g("INV").filter(function (t) { return t[1].main; });
+  if (inv.length) {
+    var cs = {}; inv.forEach(function (t) { cs[t[1].code] = 1; });
+    var nm = Object.keys(cs).sort().join("、");
+    hi.push({ title: "確認投資型 " + nm + " 的帳戶價值", tag: "優先", body: "投資型保單的保障與帳戶價值連動，保險成本會隨年齡上升，帳戶價值不足時保障可能受影響。明細頁沒有帳戶價值，建議先向公司索取<b>最新帳戶價值與費用說明</b>，再決定要維持、調整或改變繳費方式。" });
+  }
+  if (g("ANN").filter(function (t) { return t[1].main; }).length) mid.push({ title: "年金保單的給付時點", tag: "確認", body: "年金保單的開始給付年齡與金額，明細頁未顯示。建議確認預定給付時間是否與退休規劃相符。" });
+  var bf = C.policies.filter(function (P) { return P.ben_flag; }).map(function (P) { return pol4(P.code); });
+  if (bf.length) conf.push({ title: "核對受益人資料", tag: "確認", body: "以下保單的受益人明細頁顯示不完整（或僅有部分資料）：<b>" + bf.slice(0, 6).map(function (b) { return "…" + b; }).join("、") + (bf.length > 6 ? "等" : "") + "</b>。建議向公司確認最新受益人與比例，並在家庭狀況改變時一併更新。" });
+  else conf.push({ title: "定期核對受益人", tag: "確認", body: "受益人已載明於各保單，建議在結婚、生子或家庭狀況改變時重新核對姓名與比例，避免日後理賠爭議。" });
+  var nt = sums.annual_nt, usd = sums.annual_usd, pieces = [];
+  var unk = C.policies.filter(function (P) { return P.prem_unknown || P.no_detail || P.flex; }).map(function (P) { return pol4(P.code); });
+  if (nt > 0) {
+    var ks = []; sums.by_year.forEach(function (v, k) { if (v > 0) ks.push(k); }); ks.sort(function (a, b) { return a - b; }); ks = ks.slice(0, -1);
+    var dist = {}; ks.forEach(function (y) { dist[pyRound(sums.by_year.get(y))] = 1; });
+    pieces.push("目前年繳保費約 <b>" + money(nt) + " 元</b>" + (Object.keys(dist).length > 1 ? "，繳費期間陸續屆滿後會逐步下降（見保費走勢）" : ""));
+  }
+  if (usd > 0) pieces.push("另有美元保單年繳約 <b>US$" + money(usd) + "</b>，匯率變動會影響實際負擔");
+  if (unk.length) pieces.push("<b>…" + unk.slice(0, 5).join("、") + "</b> 的保費或繳別明細頁未顯示，需向公司確認");
+  if (pieces.length) conf.push({ title: "保費負擔與待確認項目", tag: "確認", body: pieces.join("；") + "。建議每年檢視一次繳費方式與預算，保費以不影響生活品質為原則。" });
+  if (C.policies.some(function (P) { return P.no_detail; })) conf.unshift({ title: "補齊缺漏的保單明細", tag: "確認", body: "有 <b>1 張保單</b>因系統無權限查詢，本報告僅以清單資料呈現（繳別、保費、受益人、職業等級、附約皆未顯示）。建議取得明細後補充，報告內容才完整。" });
+  var strong = rows.filter(function (r) { return r.level === "ok" && ["投資型／年金", "投資型保單", "年金保險"].indexOf(r.name) < 0; }).map(function (r) { return r.name; });
+  if (strong.length) keep.push({ title: strong.slice(0, 3).join("、") + "維持現況", tag: "維持", body: "<b>" + strong.slice(0, 3).join("、") + "</b> 目前已有基礎，建議維持並按時繳費，避免因停繳而影響保障；若家庭或工作狀況改變再一併檢視。" });
+  var out = hi.slice(0, 3); out = out.concat(mid.slice(0, Math.max(0, 4 - out.length))); out = out.concat(conf.slice(0, 2)); out = out.concat(keep.slice(0, 1));
+  var seen = {}, fin = [];
+  out.forEach(function (x) { if (!seen[x.title]) { seen[x.title] = 1; fin.push(x); } });
+  var hi3 = hi.slice(0, 3).length, cutAt = Math.max(0, mid.length - Math.max(0, mid.length - (4 - hi3)));
+  // Python: mid[len(mid) - max(0, len(mid) - (4 - len(hi[:3]))):]  （負索引語意）
+  var start = mid.length - Math.max(0, mid.length - (4 - hi3));
+  var tailArr = start < 0 ? mid.slice(Math.max(0, mid.length + start)) : mid.slice(start);
+  if (fin.length < 3 && tailArr.length) {
+    mid.forEach(function (x) { if (!seen[x.title] && fin.length < 6) { fin.splice(fin.length - 1, 0, x); seen[x.title] = 1; } });
+  }
+  var order = { "優先": 0, "建議": 1, "確認": 2, "維持": 3 };
+  fin.sort(function (a, b) { return order[a.tag] - order[b.tag]; });
+  return fin.slice(0, 6);
+}
+
+function keySentence(C, A, rows, sums) {
+  var ex3 = ["投資型／年金", "投資型保單", "年金保險"];
+  var ok = rows.filter(function (r) { return r.level === "ok" && ex3.indexOf(r.name) < 0; }).map(function (r) { return r.name; });
+  var low = rows.filter(function (r) { return r.level === "low" && r.val === "無"; }).map(function (r) { return r.name; });
+  var lowamt = rows.filter(function (r) { return r.level === "low" && r.val !== "無"; }).map(function (r) { return r.name; });
+  var exp = A.exp, att = [];
+  if (low.length) att.push("目前沒有 " + low.slice(0, 3).map(function (n) { return "<b>" + n.split("保障").join("") + "</b>"; }).join("、") + (low.length > 3 ? " 等" : "") + "保障");
+  if (lowamt.length) att.push("<b>" + lowamt.slice(0, 2).map(function (n) { return n.split("保障").join(""); }).join("、") + "額度</b>可再對照需求");
+  if (exp.size) {
+    var c = null; exp.forEach(function (v, k) { if (c === null || v[0] < exp.get(c)[0]) c = k; });
+    var y = exp.get(c)[0], a = exp.get(c)[1];
+    if (y - BASE_YEAR <= 15) att.push("<b>" + (SHORTCAT[c] || c) + "保障在 " + y + " 年（" + a + " 歲）屆滿</b>");
+  }
+  if (A.g("INV").length) att.push("<b>投資型保單</b>的帳戶價值需要確認");
+  if (C.flags.length) att.push("<b>部分保單資料需人工確認</b>");
+  var pre = ok.length ? "<b>" + ok.slice(0, 3).join("、") + "</b>已有基礎；" : "目前有 " + C.policies.length + " 張有效保單提供基礎保障；";
+  var s = att.length ? pre + "較需要留意的是 " + att.slice(0, 3).join("；") + "，建議先從這幾項開始確認。" : pre + "整體保障相當完整，建議維持現況並每年檢視受益人與保費。";
+  if (sums.annual_nt > 0) s += " 目前年繳保費約 <b>" + (sums.annual_nt >= 10000 ? fmtNt(pyRound(sums.annual_nt / 1000) * 1000) : money(sums.annual_nt) + "元") + "</b>。";
+  return s;
+}
+
+/* ---------- 家庭責任（RULES.md §11；model.py hh_apply 逐行對應） ---------- */
+function num(v) { v = Number(v); return isNaN(v) ? 0 : v; }
+function hhNeed(hh) {
+  var living = num(hh.living), parts = [], need = 0, ndep = 0, edu = 0;
+  (hh.members || []).forEach(function (m) { if (m.dep) { ndep += 1; need += num(m.years) * living; } edu += num(m.edu); });
+  var mort = num(hh.mortgage), debt = num(hh.debt);
+  need += edu + mort + debt;
+  if (ndep) parts.push("扶養 " + ndep + " 人・年生活費 " + fmtNt(living));
+  if (edu) parts.push("教育費 " + fmtNt(edu));
+  if (mort) parts.push("房貸 " + fmtNt(mort));
+  if (debt) parts.push("其他負債 " + fmtNt(debt));
+  return [need, parts];
+}
+function hhApply(rep, M, C, A) {
+  var hh = M.hh; if (!hh || !hh.on) return;
+  var np = hhNeed(hh), need = np[0], parts = np[1]; if (need <= 0) return;
+  var life = A.life_nt, gap = need - life;
+  var dis = sum(A.g("DISAB").filter(function (t) { return t[1].amt_kind === "NT" && t[0].cur === "NT" && t[1].main; }).map(function (t) { return t[1].amt; }));
+  var lvl = gap <= 0 ? "ok" : (gap <= need * TH.hh_mid_ratio ? "mid" : "low");
+  var note = "責任額約 " + fmtNt(need) + "（" + parts.join("、") + "）；壽險 " + fmtNt(life) + (dis ? "；失能保額 " + fmtNt(dis) : "") + (A.life_usd ? "；美元保單另計" : "") + "；依填寫資料估算";
+  var row = { name: "家庭責任", level: lvl, val: gap > 0 ? "缺口 " + fmtNt(gap) : "已涵蓋", note: note };
+  var idx = -1; for (var i = 0; i < rep.rates.length; i++) if (rep.rates[i].name === "壽險") { idx = i; break; }
+  rep.rates.splice(idx + 1, 0, row);
+  if (gap <= 0) return;
+  rep.stats[2] = { v: fmtNt(gap), l: "壽險缺口（估）", tone: "alert" };
+  var g = rep.gaps.filter(function (x) { return x.title !== "壽險額度與家庭責任" && x.title !== "壽險是否需要"; });
+  g.push({ title: "壽險缺口與家庭責任", tag: lvl === "low" ? "優先" : "建議",
+    body: "依填寫的家庭資料，家庭責任額約 <b>" + fmtNt(need) + "</b>（" + parts.join("、") + "），目前壽險約 <b>" + fmtNt(life) + "</b>，估計缺口約 <b>" + fmtNt(gap) + "</b>。這是粗估，建議先確認生活費、房貸餘額與子女教育規劃是否正確，再評估是否需要以定期壽險等方式補足、預算多少較合適。" });
+  g.sort(function (a, b) { var x = TAG_ORDER.hasOwnProperty(a.tag) ? TAG_ORDER[a.tag] : 2, y = TAG_ORDER.hasOwnProperty(b.tag) ? TAG_ORDER[b.tag] : 2; return x - y; });
+  rep.gaps = g.slice(0, 6);
+  rep.key = "依填寫的家庭責任估算，<b>壽險缺口約 " + fmtNt(gap) + "</b>；" + rep.key;
+}
+function hhDefaultMember(rel, age) { age = parseInt(age, 10) || 0; var dep = age < 20 || age >= 65; return { rel: rel, age: age, dep: dep, years: age < 20 ? Math.max(0, 22 - age) : (age >= 65 ? Math.min(20, Math.max(5, 85 - age)) : 0), edu: age < 20 ? 1000000 : 0 }; }
+var TAG_ORDER = { "優先": 0, "建議": 1, "確認": 2, "維持": 3 };
+function applyOv(rep, ov) {
+  if (!ov) return rep;
+  if (ov.key) rep.key = ov.key.t;
+  rep.medical.forEach(function (st, i) { var o = (ov.med || {})[String(i)]; if (o) st.sentence = o.t; });
+  if (ov.closing) rep.closing = ov.closing.t;
+  var hide = ov.hide || [], gap = ov.gap || {}, g2 = [];
+  rep.gaps.forEach(function (g) { if (hide.indexOf(g.title) >= 0) return; if (Object.prototype.hasOwnProperty.call(gap, g.title)) g = Object.assign({}, g, { body: gap[g.title].t }); g2.push(g); });
+  (ov.extra || []).forEach(function (g) { g2.push({ title: g.title, tag: g.tag, body: g.body }); });
+  g2.sort(function (a, b) { var x = TAG_ORDER.hasOwnProperty(a.tag) ? TAG_ORDER[a.tag] : 2, y = TAG_ORDER.hasOwnProperty(b.tag) ? TAG_ORDER[b.tag] : 2; return x - y; });
+  rep.gaps = g2.slice(0, 8);
+  return rep;
+}
+
+function reportFromModel(M, ov, opt) {
+  setTH(opt && opt.th !== undefined ? opt.th : GTH);
+  var C = toC(M);
+  var A = analyze(C), rows = levelRows(C, A), sums = computeSums(C), tr = trendBlock(C, sums), pays = paymentsBlock(C);
+  var pols = C.policies.map(function (P, i) { return policyCard(i + 1, C, P); });
+  var np = C.policies.filter(function (P) { return P.annual > 0; }).length;
+  var note = [C.policies.length + " 張有效保單", np ? np + " 張目前有應繳台幣保費" : "目前沒有應繳的台幣保費（已繳畢、美元、躉繳或未顯示）"];
+  if (C.policies.some(function (P) { return P.cur === "USD"; })) note.push("美元保單另計，不含於合計");
+  if (C.policies.some(function (P) { return P.no_detail; })) note.push("另有 1 張保單缺明細（系統無權限查詢），未計入");
+  var occ = (M.occ || "").trim();
+  var rep = { demo: false, name: san(C.name), age: C.age, age_label: "保險年齡 " + C.age + " 歲" + (occ ? "・職業等級 " + occ : ""), date: DATE_TXT, roomy: pols.length <= 6,
+    stats: buildStats(C, A, rows, sums), rates: rows, key: keySentence(C, A, rows, sums), medical: medicalBlock(C, A),
+    timeline: timelineBlock(C, A), trend: tr, payments: pays, policies: pols, premium_note: C.policies.length ? note.join("・") : "尚未輸入保單",
+    gaps: gapsBlock(C, A, rows, sums), closing: CLOSING };
+  if (!C.policies.length) rep.roomy = true;
+  hhApply(rep, M, C, A);
+  if (opt && opt.auto) return rep;
+  return applyOv(rep, ov);
+}
+
+/* ---------- 版面（report_render_all.py 移植） ---------- */
+function e(s) { return String(s === null || s === undefined ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#x27;"); }
+function eb(s) { return e(s).split("&lt;b&gt;").join("<b>").split("&lt;/b&gt;").join("</b>"); }
+function rmoney(n) { return commas(int(n)); }
+var BAR_H = 64;
+function timelineSvg(t) {
+  var a0 = t.base_age, a1 = t.end_age === undefined ? 100 : t.end_age, y0 = t.base_year, rows = t.rows, rh = t.row_h === undefined ? 40 : t.row_h, top = 34;
+  function X(a) { return 118 + (a - a0) / (a1 - a0) * 262; }
+  var H = top + rows.length * rh + 10;
+  var s = ['<svg class="tl" viewBox="0 0 400 ' + H + '" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="保障時間軸">'];
+  var ticks = (t.ticks && t.ticks.length) ? t.ticks : [0, 1, 2, 3, 4].map(function (i) { return a0 + pyRound((a1 - a0) * i / 4); });
+  var wa = t.warn_age;
+  ticks.forEach(function (ag) {
+    var x = X(ag), yy = y0 + (ag - a0), col = wa === ag ? "#d9534f" : "#5b7480";
+    s.push('<line x1="' + fixed(x, 1) + '" y1="' + (top - 6) + '" x2="' + fixed(x, 1) + '" y2="' + (top + rows.length * rh) + '" stroke="#d5e3e6" stroke-dasharray="3 3"/>');
+    s.push('<text x="' + fixed(x, 1) + '" y="12" font-size="10" text-anchor="middle" fill="' + col + '" font-weight="700">' + yy + '</text>');
+    s.push('<text x="' + fixed(x, 1) + '" y="24" font-size="9.5" text-anchor="middle" fill="' + col + '">' + ag + '歲</text>');
+  });
+  var colors = { life: "#1a9aa0", mid: "#3b82c4", warn: "#e8604c", yr: "#8fc7cb" };
+  rows.forEach(function (r, i) {
+    var y = top + i * rh;
+    s.push('<text x="0" y="' + (y + 15) + '" font-size="12.5" font-weight="700" fill="#16323d">' + e(r.name) + '</text>');
+    s.push('<text x="0" y="' + (y + 28) + '" font-size="9.5" fill="#7a8f98">' + e(r.src === undefined ? "" : r.src) + '</text>');
+    var bx = X(a0), by = y + 7, kind = r.kind;
+    if (kind === "none") {
+      s.push('<rect x="' + fixed(bx, 1) + '" y="' + by + '" width="' + fixed(X(a1) - bx, 1) + '" height="18" rx="9" fill="none" stroke="#e0a3a1" stroke-dasharray="4 3"/>');
+      s.push('<text x="' + fixed((bx + X(a1)) / 2, 1) + '" y="' + (by + 13) + '" font-size="10.5" text-anchor="middle" fill="#c9302c" font-weight="700">✕ ' + e(r.label) + '</text>');
+      return;
+    }
+    var end = Math.min(r.end_age, a1), w = X(end) - bx, c = colors[kind];
+    if (kind === "yr") {
+      s.push('<rect x="' + fixed(bx, 1) + '" y="' + by + '" width="' + fixed(w, 1) + '" height="18" rx="9" fill="#e3f3f4" stroke="' + c + '" stroke-dasharray="5 3"/>');
+      s.push('<text x="' + fixed(bx + 8, 1) + '" y="' + (by + 13) + '" font-size="10" fill="#2b6f74">' + e(r.label) + '</text>');
+    } else {
+      s.push('<rect x="' + fixed(bx, 1) + '" y="' + by + '" width="' + fixed(w, 1) + '" height="18" rx="9" fill="' + c + '"/>');
+      if (kind === "warn") {
+        s.push('<circle cx="' + fixed(X(end), 1) + '" cy="' + (by + 9) + '" r="6" fill="#fff" stroke="' + c + '" stroke-width="3"/>');
+        if (X(end) + 12 + 6.2 * clen(r.label) > 398) s.push('<text x="' + fixed(X(end) - 12, 1) + '" y="' + (by + 13) + '" font-size="10" text-anchor="end" fill="#fff" font-weight="700">' + e(r.label) + '</text>');
+        else s.push('<text x="' + fixed(X(end) + 12, 1) + '" y="' + (by + 13) + '" font-size="10.5" fill="#c9302c" font-weight="700">' + e(r.label) + '</text>');
+      } else s.push('<text x="' + fixed(bx + 8, 1) + '" y="' + (by + 13) + '" font-size="10" fill="#fff" font-weight="700">' + e(r.label) + '</text>');
+    }
+  });
+  s.push("</svg>");
+  return s.join("");
+}
+function head(r, no) { return '<div class="mini"><span>' + e(r.name) + ' 保單健檢報告</span><span class="mr">' + (r.demo ? '<span class="demo">示範資料</span>' : "") + '<span>' + no + '</span></span></div>'; }
+function foot() { return '<div class="foot">' + e(FOOTER_TEXT) + '</div>'; }
+function page1(r) {
+  var meta = '<div><span>客戶</span>' + e(r.name) + '・' + e(r.age_label !== undefined ? r.age_label : r.age + "歲") + '</div><div><span>健檢日期</span>' + e(r.date) + '</div><div><span>規劃顧問</span>' + e(ADVISOR) + '</div>';
+  var hdr = '<div class="hdr"><div class="brand">POLICY HEALTH CHECK' + (r.demo ? '<span class="demobadge">示範資料</span>' : "") + '</div><div class="title">' + e(r.name) + ' 保單健檢報告</div><div class="meta">' + meta + '</div></div>';
+  var stats = r.stats.slice(0, 4).map(function (s) { return '<div class="' + (s.tone === "alert" ? "alert" : "") + '"><b>' + e(s.v) + '</b><span>' + e(s.l) + '</span></div>'; }).join("");
+  var lab = { ok: "充足", mid: "尚可", low: "不足" }, pct = { ok: 100, mid: 62, low: 28 };
+  var rates = r.rates.map(function (x) { return '<div class="rate"><div class="rtop"><span class="rname">' + e(x.name) + '</span><span class="rval">' + e(x.val) + '</span><span class="pill ' + x.level + '">' + lab[x.level] + '</span></div><div class="bar"><div class="fill ' + x.level + '" style="width:' + pct[x.level] + '%"></div></div><div class="rnote">' + e(x.note) + '</div></div>'; }).join("");
+  return '<section class="page p1">' + hdr + '<div class="stats">' + stats + '</div><h2>一頁看懂您的保障 <small>綠色充足・黃色尚可・紅色建議補強</small></h2><div class="card">' + rates + '</div><div class="key"><div class="kt">健檢重點一句話</div>' + eb(r.key) + '</div>' + foot() + '</section>';
+}
+function page2(r) {
+  var out = ['<section class="page p2">' + head(r, 2) + '<h2>醫療前・中・後 <small>從確診、治療到復原</small></h2>'];
+  r.medical.forEach(function (st) {
+    var rows = st.rows.map(function (ab) { return '<div class="mrow"><span>' + e(ab[0]) + '</span><b>' + e(ab[1]) + '</b></div>'; }).join("");
+    out.push('<div class="card med"><div class="mt">' + e(st.title) + '</div><div class="msen">' + eb(st.sentence) + '</div>' + rows + '</div>');
+  });
+  out.push(foot() + '</section>');
+  return out.join("");
+}
+function payTable(r) {
+  var p = r.payments, tot = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], body = [];
+  p.rows.forEach(function (row) {
+    var usd = row.currency === "USD";
+    if (row.pending) { body.push('<tr><td class="n">' + e(row.insured) + '<small>' + e(row.policy) + '</small></td><td colspan="12" class="pendc">待確認（繳別或保費明細頁未顯示）</td><td class="t">—</td></tr>'); return; }
+    var cells = [];
+    for (var m = 1; m <= 12; m++) {
+      if (row.months.indexOf(m) >= 0) { if (usd) cells.push('<td class="on usd"><i>$' + rmoney(row.amount) + '</i></td>'); else { cells.push('<td class="on"><i>' + rmoney(row.amount) + '</i></td>'); tot[m - 1] += row.amount; } }
+      else cells.push('<td></td>');
+    }
+    var total = row.amount * row.months.length, tt = usd ? "US$" + rmoney(total) : rmoney(total);
+    body.push('<tr><td class="n">' + e(row.insured) + '<small>' + e(row.policy) + '</small></td>' + cells.join("") + '<td class="t' + (usd ? " usd" : "") + '">' + tt + '</td></tr>');
+  });
+  body.push('<tr class="sum"><td class="n">當月合計<small>台幣</small></td>' + tot.map(function (x) { return '<td>' + (x ? rmoney(x) : "") + '</td>'; }).join("") + '<td class="t">' + rmoney(sum(tot)) + '</td></tr>');
+  var th = ""; for (var i = 1; i <= 12; i++) th += "<th>" + i + "月</th>";
+  var det = p.details || [];
+  var legend = p.compact ? '<div class="paynote2">' + det.map(e).join("；") + '</div>' : '<ul class="paynote">' + det.map(function (x) { return '<li>' + e(x) + '</li>'; }).join("") + '</ul>';
+  return '<div class="card paycard"><div class="swipe">← 左右滑動可看全年 →</div><div class="scrollx"><table class="pay"><thead><tr><th class="n">被保險人</th>' + th + '<th class="t">合計</th></tr></thead><tbody>' + body.join("") + '</tbody></table></div>' + legend + '<div class="rnote">' + eb(p.note === undefined ? "" : p.note) + '</div></div>';
+}
+function page3(r) {
+  var tr = r.trend, mx = Math.max.apply(null, tr.bars.map(function (b) { return b.amount; })) || 1;
+  var bars = tr.bars.map(function (b) { var h = Math.max(6, b.amount / mx * BAR_H); return '<div class="bc"><div class="bv">' + rmoney(b.amount) + '</div><div class="bb" style="height:' + fixed(h, 0) + 'px"></div><div class="bl">' + e(b.range) + '</div></div>'; }).join("");
+  var legend = '<div class="legend"><span><i style="background:#1a9aa0"></i>終身</span><span><i style="background:#3b82c4"></i>定期（長期）</span><span><i style="background:#e8604c"></i>即將到期</span><span><i style="background:#e3f3f4;border:1px dashed #8fc7cb"></i>一年期／待確認</span></div>';
+  return '<section class="page p3">' + head(r, 3) + '<h2>保障時間軸 <small>每項保障能陪您到幾歲</small></h2><div class="card tlc">' + timelineSvg(r.timeline) + legend + '</div><h2>保費走勢 <small>依年齡區間（元／年）</small></h2><div class="card"><div class="bars">' + bars + '</div><div class="rnote">' + eb(tr.note === undefined ? "" : tr.note) + '</div></div><h2>繳費明細表 <small>每年每張保單的扣款月份</small></h2>' + payTable(r) + foot() + '</section>';
+}
+function stOf(st) { return { "有效": "ok", "繳費期滿": "info", "繳清": "info" }[st] || "info"; }
+function totalOf(r) { var t = 0; r.policies.forEach(function (p) { if (typeof p.premium === "number") t += p.premium; }); return t; }
+function p4tail(r) { var t = totalOf(r); return '<div class="total"><span>已記錄年繳保費合計（台幣）<br><small>' + e(r.premium_note === undefined ? "" : r.premium_note) + '</small></span><b>' + (t ? rmoney(t) + " 元/年" : "—") + '</b></div>' + foot() + '</section>'; }
+function page4(r) {
+  if (r.roomy) return page4roomy(r);
+  var pols = r.policies.map(function (p) {
+    var st = p.status || "", prem = p.premium_text || rmoney(p.premium) + '<small>元/年</small>', items = p.items.join("；");
+    return '<div class="pol c"><div class="ptop"><span class="pno">' + p.no + '</span><div class="pnm"><span class="pname">' + e(p.name) + '</span></div><div class="pprem">' + prem + '</div></div><div class="pper"><b>' + e(p.company) + '</b>・' + e(p.period) + (st ? ' <span class="st ' + stOf(st) + '">' + e(st) + '</span>' : "") + '</div><div class="pmeta2">職業等級 <b>' + e(p.occupation) + '</b>　｜　受益人 <b>' + e(p.beneficiary) + '</b></div>' + (items ? '<div class="pitems">' + e(items) + '</div>' : "") + '</div>';
+  }).join("");
+  return '<section class="page p4">' + head(r, 4) + '<h2>現有保單一覽 <small>共 ' + r.policies.length + ' 張（含附約）</small></h2>' + pols + p4tail(r);
+}
+function page4roomy(r) {
+  var pols = r.policies.map(function (p) {
+    var st = p.status || "", prem = p.premium_text || rmoney(p.premium) + '<small>元/年</small>', lis = p.items.map(function (i) { return "<li>" + e(i) + "</li>"; }).join("");
+    return '<div class="pol"><div class="ptop"><span class="pno">' + p.no + '</span><div><div class="pco">' + e(p.company) + '</div><div class="pname">' + e(p.name) + '</div></div><div class="pprem">' + prem + '</div></div><div class="pper">' + e(p.period) + (st ? ' <span class="st ' + stOf(st) + '">' + e(st) + '</span>' : "") + '</div><div class="pmeta"><div><span>職業等級</span><b>' + e(p.occupation) + '</b></div><div><span>受益人</span><b>' + e(p.beneficiary) + '</b></div></div><ul>' + lis + '</ul></div>';
+  }).join("");
+  return '<section class="page p4">' + head(r, 4) + '<h2>現有保單一覽 <small>共 ' + r.policies.length + ' 張（含附約）</small></h2>' + pols + p4tail(r);
+}
+function page5(r) {
+  var tagc = { "優先": "hi", "建議": "mid", "確認": "mid", "維持": "ok" };
+  var recs = r.gaps.map(function (g, i) { return '<div class="rec"><div class="rn">' + (i + 1) + '</div><div class="rb"><div class="rt">' + e(g.title) + '<span class="tag ' + (tagc[g.tag] || "mid") + '">' + e(g.tag) + '</span></div><div class="rd">' + eb(g.body) + '</div></div></div>'; }).join("");
+  var close = '<div class="close"><b>保險是幫您守住生活的工具，不是負擔。</b><br>' + e(r.closing !== undefined ? r.closing : "以上建議可依預算與人生階段慢慢調整，有任何疑問都歡迎隨時找我聊聊。") + '<br>— ' + e(ADVISOR) + '</div>';
+  return '<section class="page p5">' + head(r, 5) + '<h2>缺口與建議 <small>依優先順序</small></h2>' + recs + close + foot() + '</section>';
+}
+function renderWeb(r) { return '<div class="rpt">' + page1(r) + page2(r) + page3(r) + page4(r) + page5(r) + "</div>"; }
+
+/* ---------- 編輯輔助 ---------- */
+function setAmount(P, x, v) {        // 輸入數字：台幣保單→台幣、美元保單→美元；空白→未顯示
+  if (v === null || v === "" || isNaN(v)) { x.amt_kind = "NA"; x.amt = null; x.amt_txt = ""; return; }
+  v = Number(v);
+  if (P.cur === "USD") { x.amt_kind = "USD"; x.amt = v; x.amt_txt = "美元 " + commas(int(v)); }
+  else { x.amt_kind = "NT"; x.amt = v; x.amt_txt = fmtNt(v); }
+}
+function isoFromYear(y, old) { var md = old ? old.slice(4) : "-12-31"; return String(y) + md; }
+
+return { TH_DEFAULT: TH_DEFAULT, setGlobalTH: function (t) { GTH = t; }, hhDefaultMember: hhDefaultMember, hhNeed: hhNeed, reportFromModel: reportFromModel, renderWeb: renderWeb, applyOv: applyOv, setAmount: setAmount, fmtNt: fmtNt, isoFromYear: isoFromYear, CATLBL: CATLBL, FREQ: FREQ, BASE_YEAR: BASE_YEAR, e: e, eb: eb, commas: commas };
+})();
+if (typeof module !== "undefined") module.exports = RPT;
+</script>
+<script>
+(function(){
+"use strict";
+var ITER_MIN=600000;                    // 低於此次數的資料檔一律拒絕
+var enc=new TextEncoder(), dec=new TextDecoder();
+var state=null, cache={}, idleT=null, VK={key:null,raw:null};
+var $=function(id){return document.getElementById(id)};
+
+function b64(s){var b=atob(s),a=new Uint8Array(b.length);for(var i=0;i<b.length;i++)a[i]=b.charCodeAt(i);return a}
+function hex(buf){return Array.prototype.map.call(new Uint8Array(buf),function(x){return('0'+x.toString(16)).slice(-2)}).join('')}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function norm(s){return String(s).normalize('NFKC')}
+
+async function getBin(url){
+  var r=await fetch(url,{cache:'no-cache',credentials:'omit'});
+  if(!r.ok) throw new Error('http '+r.status);
+  return new Uint8Array(await r.arrayBuffer());
+}
+async function lookupId(account){
+  var h=await crypto.subtle.digest('SHA-256',enc.encode('lk1|'+account));
+  return hex(h).slice(0,32);
+}
+async function pbk(secret,salt,iter){
+  var base=await crypto.subtle.importKey('raw',enc.encode(secret),'PBKDF2',false,['deriveKey']);
+  return crypto.subtle.deriveKey({name:'PBKDF2',hash:'SHA-256',salt:salt,iterations:iter},base,{name:'AES-GCM',length:256},false,['decrypt','encrypt']);
+}
+/* 信封加密 v2：v/<id>.key 內 pw（密碼包裝 DEK＋設定日期）、rc（復原碼包裝 DEK）、bx（box 用）、tk（DEK 加密的 GitHub token） */
+async function unwrapW(w,secret,tag){
+  if(!w||w.it<ITER_MIN) throw new Error('iter');
+  var key=await pbk(secret,b64(w.salt),w.it);
+  return JSON.parse(dec.decode(await crypto.subtle.decrypt({name:'AES-GCM',iv:b64(w.iv),additionalData:enc.encode(tag)},key,b64(w.ct))));
+}
+async function getKeyFile(lk,fresh){
+  if(fresh){var r=await fetch(apiBase()+'/repos/'+REPO+'/contents/v/'+lk+'.key?ref='+BRANCH,{headers:{'Accept':'application/vnd.github.raw'},cache:'no-store',credentials:'omit'});
+    if(!r.ok) throw new Error('http '+r.status); return JSON.parse(await r.text())}
+  return JSON.parse(dec.decode(await getBin('v/'+lk+'.key')));
+}
+async function useDek(K,raw,lk){
+  var dek=await crypto.subtle.importKey('raw',raw,'AES-GCM',false,['decrypt','encrypt']);
+  var bin=await getBin('v/'+lk+'.bin');
+  if(bin[0]!==0x56||bin[1]!==0x32) throw new Error('fmt');
+  var pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:bin.slice(2,14),additionalData:enc.encode('V2')},dek,bin.slice(14));
+  VK={key:dek,raw:bin,dk:raw,K:K,lk:lk,tok:null,tkErr:'',expired:false,pwd:''};
+  if(K.tk){try{VK.tok=JSON.parse(dec.decode(await crypto.subtle.decrypt({name:'AES-GCM',iv:b64(K.tk.iv),additionalData:enc.encode('tk')},dek,b64(K.tk.ct)))).t}catch(e){VK.tok=null}}
+  var V=JSON.parse(dec.decode(pt)); RPT.setGlobalTH(V.th||null); return V;
+}
+async function openVault(account,password){
+  var lk=await lookupId(account), K, o;
+  K=await getKeyFile(lk,false);                 // 帳號不對 → 404，直接失敗
+  try{o=await unwrapW(K.pw,account+'\n'+password,'pw')}
+  catch(e){K=await getKeyFile(lk,true); o=await unwrapW(K.pw,account+'\n'+password,'pw')}   // 剛改過密碼時網站快取可能還是舊檔
+  var V=await useDek(K,b64(o.k),lk);
+  VK.acc=account; VK.pwd=o.d||''; VK.expired=pwAgeDays(o.d)>=PW_MAX_DAYS; return V;
+}
+var PW_MAX_DAYS=180;
+function pwAgeDays(d){if(!d) return 0; return Math.floor((Date.now()-Date.parse(d+'T00:00:00+08:00'))/864e5)}
+async function openFile(id,keyB64){
+  var bin=await getBin('d/'+id+'.bin');
+  var key=await crypto.subtle.importKey('raw',b64(keyB64),'AES-GCM',false,['decrypt']);
+  return crypto.subtle.decrypt({name:'AES-GCM',iv:bin.slice(0,12)},key,bin.slice(12));
+}
+
+/* 報告 HTML 先 gzip 再加密（rz=1）；解密後以瀏覽器內建 DecompressionStream 解開 */
+async function gunzip(buf){
+  var ds=new DecompressionStream('gzip');
+  var w=ds.writable.getWriter(); w.write(buf); w.close();
+  return new Response(ds.readable).arrayBuffer();
+}
+async function openReport(mb){
+  var buf=await openFile(mb.rf,mb.rk);
+  return dec.decode(mb.rz?await gunzip(buf):buf);
+}
+
+/* ---- 登入／登出 ---- */
+$('lf').addEventListener('submit',async function(ev){
+  ev.preventDefault();
+  var acc=norm($('u').value).trim(), pw=norm($('p').value);
+  var btn=$('go'), err=$('err'); err.textContent='';
+  if(!acc||!pw){err.textContent='帳號或密碼不正確';return}
+  btn.disabled=true; btn.textContent='驗證中…';
+  try{
+    state=await openVault(acc,pw);
+    $('p').value=''; $('u').value='';
+    afterLogin();
+  }catch(e){
+    state=null; err.textContent='帳號或密碼不正確'; $('p').value='';
+  }finally{btn.disabled=false;btn.textContent='登入'}
+});
+function afterLogin(){
+  $('login').hidden=true; $('fgf').hidden=true; $('lf').hidden=false; $('app').hidden=false;
+  resetIdle(); route();
+  if(admTok()) admVerify().then(function(){if(state)route()}).catch(function(e){VK.tkErr=e.message||'驗證失敗'; if(state)route()});
+}
+function logout(){
+  [cardUrls,thumbUrls].forEach(function(o){Object.keys(o).forEach(function(k){URL.revokeObjectURL(o[k])})}); cardUrls={}; thumbUrls={}; closeLb(); state=null; VK={key:null,raw:null}; admReset(); cache={}; famBy=null; memBy=null; homeQ=''; clearTimeout(idleT);
+  $('view').innerHTML=''; $('app').hidden=true; $('login').hidden=false;
+  document.title='淑惠の客戶保單整理';
+  if(location.hash) history.replaceState(null,'',location.pathname+location.search);
+}
+$('out').addEventListener('click',logout);
+function resetIdle(){clearTimeout(idleT);idleT=setTimeout(function(){if(ADM.on&&nDirty()&&!confirm('閒置過久將登出，尚未發布的修改會遺失。要繼續編輯嗎？')){logout()}else if(ADM.on&&nDirty()){resetIdle()}else logout()},30*60*1000)}
+window.addEventListener('beforeunload',function(e){if(ADM.on&&nDirty()){e.preventDefault();e.returnValue=''}});
+['click','keydown','touchstart'].forEach(function(n){document.addEventListener(n,function(){if(state)resetIdle()},{passive:true})});
+
+/* ---- 路由：#/ 家庭清單、#/a01 家庭頁、#/a01-1 報告頁 ---- */
+window.addEventListener('hashchange',function(){if(state)route()});
+var famBy=null, memBy=null;
+function index(){famBy={};memBy={};state.f.forEach(function(f){famBy[f.c]=f;f.m.forEach(function(m){memBy[m.c]=m;m.f=f})})}
+function route(){
+  if(!famBy) index();
+  var h=(location.hash||'').replace(/^#\/?/,'');
+  closeLb(); window.scrollTo(0,0);
+  if(h==='admin') return showAdmin();
+  if(VK.expired||h==='pw') return showPw(VK.expired);
+  if(h==='cards') return showCards();
+  if(h==='log'&&ADM.on) return showLog();
+  if(h==='th'&&ADM.on) return showTH();
+  if(h.indexOf('edit/')===0&&ADM.on) return showEdit(h.slice(5));
+  if(memBy[h]) return showReport(memBy[h]);
+  if(famBy[h]) return showFamily(famBy[h]);
+  if(h!==''){location.replace('#/');return}
+  showHome();
+}
+function hl(name,q){
+  if(!q) return esc(name);
+  var i=norm(name).indexOf(q); if(i<0) return esc(name);
+  return esc(name.slice(0,i))+'<span class="hit">'+esc(name.slice(i,i+q.length))+'</span>'+esc(name.slice(i+q.length));
+}
+function showHome(){
+  document.title='保單健檢';
+  $('back').hidden=true; $('bt').textContent='客戶清單';
+  var nm=0; state.f.forEach(function(f){nm+=f.m.length});
+  $('view').innerHTML=admBar('home')+setupNote()+'<h1>客戶清單</h1><p class="sub">共 '+state.f.length+' 組、'+nm+' 位客戶；輸入姓名可搜尋</p><div id="fo"><a class="folder" href="#/cards"><div class="r1"><div class="fi">📁</div><div><div class="nm">保障圖卡</div><div class="ag">'+(state.cd||[]).length+' 張保障教育圖卡</div></div><div class="go">›</div></div></a></div><input id="q" type="search" placeholder="搜尋姓名" autocomplete="off" autocapitalize="none" spellcheck="false" enterkeyhint="search"><div id="fl"></div>';
+  var q=$('q'); q.value=homeQ;
+  function draw(){
+    homeQ=q.value; var s=norm(q.value).trim(), h='', n=0; $('fo').hidden=!!s;
+    state.f.forEach(function(f){
+      var hit=f.m.filter(function(m){return !s||norm(m.n).indexOf(s)>=0});
+      if(!hit.length) return; n++;
+      var names=f.m.map(function(m){return (s&&norm(m.n).indexOf(s)>=0)?hl(m.n,s):esc(m.n)}).join('、');
+      var chips='<span class="chip">'+f.m.length+' 位</span>'+(f.k?'<span class="chip">'+esc(f.k)+'</span>':'')+(f.r?'<span class="chip rv">分組待複核</span>':'');
+      h+='<a class="mem fam" href="#/'+f.c+'"><div class="r1"><div class="av">'+f.c+'</div><div><div class="nl">'+names+'</div></div><div class="go">›</div></div><div class="r2">'+chips+'</div></a>';
+    });
+    $('fl').innerHTML=h||'<div id="msg">找不到符合的姓名</div>';
+  }
+  q.addEventListener('input',draw); draw(); wireBar();
+}
+var homeQ='';
+function showFamily(f){
+  document.title='保單健檢';
+  $('back').hidden=false; $('back').href='#/'; $('bt').textContent='家庭 '+f.c;
+  var h='<h1>家庭 '+f.c+'</h1><p class="sub">共 '+f.m.length+' 位有報告的客戶，點選查看保單健檢報告</p>';
+  if(f.r) h+='<div class="note">此分組尚待複核，僅視為「同一組」，並不代表已確認家人關係。</div>';
+  f.m.forEach(function(mb){
+    var chips='<span class="chip">'+mb.np+' 張保單</span><span class="chip">年繳 '+mb.pm.toLocaleString('en-US')+' 元</span>';
+    (mb.lw||[]).forEach(function(x){chips+='<span class="chip low">'+esc(x)+' 建議補強</span>'});
+    h+='<a class="mem" href="#/'+mb.c+'"><div class="r1"><div class="av">'+esc(mb.n.slice(-1))+'</div><div><div class="nm">'+esc(mb.n)+'</div><div class="ag">保險年齡 '+esc(mb.a)+' 歲</div></div><div class="go">›</div></div><div class="r2">'+chips+'</div></a>';
+  });
+  $('view').innerHTML=admBar('fam')+h+famTools(f); wireBar(); wireFam(f);
+}
+
+var cardUrls={}, thumbUrls={}, cardIO=null, lbI=-1, lbTok=0;
+async function blobUrl(id,key){var buf=await openFile(id,key); return URL.createObjectURL(new Blob([buf],{type:'image/webp'}))}
+async function loadThumb(i,el){
+  var c=state.cd[i]; if(!c||el.dataset.done) return; el.dataset.done='1';
+  try{
+    if(!thumbUrls[i]) thumbUrls[i]=await blobUrl(c.t,c.tk);
+    if(!state||location.hash!=='#/cards') return;
+    var im=new Image(); im.alt='保障圖卡 '+(i+1); im.decoding='async';
+    im.onload=function(){el.innerHTML='<span class="no">'+(i+1)+'</span>'; el.appendChild(im); el.dataset.ok='1'};
+    im.onerror=function(){el.innerHTML='<span class="ph">載入失敗</span>'; delete el.dataset.done};
+    im.src=thumbUrls[i];
+  }catch(e){el.innerHTML='<span class="ph">載入失敗</span>'; delete el.dataset.done}
+}
+function showCards(){
+  document.title='保單健檢';
+  $('back').hidden=false; $('back').href='#/'; $('bt').textContent='保障圖卡';
+  var n=(state.cd||[]).length, h='<h1>保障圖卡</h1><p class="sub">共 '+n+' 張，點縮圖可放大、左右切換</p><div class="cards">';
+  for(var i=0;i<n;i++) h+='<button type="button" class="cd" data-i="'+i+'" aria-label="保障圖卡 '+(i+1)+'"><span class="ph">…</span></button>';
+  $('view').innerHTML=h+'</div>';
+  var els=[].slice.call(document.querySelectorAll('.cd'));
+  els.forEach(function(el){el.addEventListener('click',function(){openLb(+el.dataset.i)})});
+  if(cardIO) cardIO.disconnect();
+  if('IntersectionObserver' in window){
+    cardIO=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){cardIO.unobserve(e.target);loadThumb(+e.target.dataset.i,e.target)}})},{rootMargin:'500px 0px'});
+    els.forEach(function(el){cardIO.observe(el)});
+  }else els.forEach(function(el){loadThumb(+el.dataset.i,el)});
+}
+async function showLb(i){
+  var n=state.cd.length; if(i<0||i>=n) return; lbI=i; var tok=++lbTok, d=$('lb'); if(!d) return;
+  d.classList.remove('z'); d.scrollTo(0,0);
+  var im=d.querySelector('img'); im.alt='保障圖卡 '+(i+1);
+  $('lbc').textContent=(i+1)+' / '+n; $('lbp').disabled=(i===0); $('lbq').disabled=(i===n-1);
+  if(cardUrls[i]){im.className='';im.src=cardUrls[i];return}
+  if(thumbUrls[i]){im.className='th';im.src=thumbUrls[i]}else{im.removeAttribute('src')}
+  try{
+    var u=await blobUrl(state.cd[i].f,state.cd[i].k); cardUrls[i]=u;
+    if(tok===lbTok&&$('lb')){im.className='';im.src=u}
+  }catch(e){}
+}
+function openLb(i){
+  closeLb();
+  var d=document.createElement('div'); d.id='lb';
+  d.innerHTML='<img alt=""><button id="lbx" type="button" aria-label="關閉">×</button><button class="lbn" id="lbp" type="button" aria-label="上一張">‹</button><button class="lbn" id="lbq" type="button" aria-label="下一張">›</button><div id="lbc"></div><div id="lbh">點圖放大／縮小・左右滑動或按 ‹ › 切換・× 關閉</div>';
+  var sx=null,sy=null;
+  d.addEventListener('click',function(ev){
+    var id=ev.target.id;
+    if(id==='lbp'){showLb(lbI-1)} else if(id==='lbq'){showLb(lbI+1)}
+    else if(ev.target.tagName==='IMG'){d.classList.toggle('z')} else closeLb();
+  });
+  d.addEventListener('touchstart',function(e){if(e.touches.length===1){sx=e.touches[0].clientX;sy=e.touches[0].clientY}else sx=null},{passive:true});
+  d.addEventListener('touchend',function(e){
+    if(sx===null||d.classList.contains('z')) return;
+    var t=e.changedTouches[0], dx=t.clientX-sx, dy=t.clientY-sy; sx=null;
+    if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.5){showLb(dx<0?lbI+1:lbI-1)}
+  },{passive:true});
+  document.body.appendChild(d); document.body.style.overflow='hidden';
+  showLb(i);
+}
+function closeLb(){var d=$('lb'); if(d){d.remove(); document.body.style.overflow=''; lbTok++}}
+document.addEventListener('keydown',function(e){
+  if(!$('lb')) return;
+  if(e.key==='Escape')closeLb(); else if(e.key==='ArrowLeft')showLb(lbI-1); else if(e.key==='ArrowRight')showLb(lbI+1);
+});
+async function showReport(mb){
+  var id=mb.c;
+  $('back').hidden=false; $('back').href='#/'+mb.f.c; $('bt').textContent=mb.n+' 保單健檢報告';
+  var v=$('view'); v.innerHTML='<div id="msg">資料解密中…</div>';
+  try{
+    if(ADM.on&&ADM.thDirty&&!ADM.models[id]) await getModel(mb);
+    var live=ADM.on&&(ADM.dirty[id]||ADM.thDirty)&&ADM.models[id];
+    if(live) cache[id]=RPT.renderWeb(RPT.reportFromModel(ADM.models[id].model,ADM.models[id].ov));
+    else if(!cache[id]) cache[id]=await openReport(mb);
+    if(!state||location.hash!=='#/'+id) return;
+    var stale=live||mb.ps, pl=mb.pf?(stale?'下載 PDF（修改前版本）':'下載 PDF'):'';
+    var btns=function(n){return (pl?'<button class="btn pri" type="button" id="dl'+n+'">'+pl+'</button>':'')+(stale?'<button class="btn" type="button" id="pr'+n+'">列印／另存新版 PDF</button>':'')};
+    v.innerHTML=admBar('rep')+(ADM.on?'<div class="admb"><a class="btn pri" href="#/edit/'+id+'">編輯此報告</a></div>':'')+
+      (live?'<div class="stale">此報告有尚未發布的修改（預覽）。</div>':'')+(stale?'<div class="stale">報告內容已更新，PDF 檔待重新產生；需要新版可先用「列印／另存新版 PDF」。</div>':'')+
+      '<div class="dl"><span class="who">'+esc(mb.n)+'</span><span>'+btns(1)+'</span></div>'+cache[id]+'<div class="dlbot">'+btns(2)+'</div>';
+    wireBar();
+    ['dl1','dl2'].forEach(function(b){if($(b))$(b).addEventListener('click',function(){downloadPdf(mb,[$('dl1'),$('dl2')],pl)})});
+    ['pr1','pr2'].forEach(function(b){if($(b))$(b).addEventListener('click',function(){printReport(mb,cache[id])})});
+  }catch(e){v.innerHTML='<div id="msg">資料讀取失敗，請重新整理後再登入。</div>'}
+}
+async function downloadPdf(mb,btns,lab){
+  btns.forEach(function(b){b.disabled=true;b.textContent='準備中…'});
+  try{
+    var buf=await openFile(mb.pf,mb.pk);
+    var url=URL.createObjectURL(new Blob([buf],{type:'application/pdf'}));
+    var a=document.createElement('a'); a.href=url; a.download=mb.n+' 保單健檢報告.pdf'; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){URL.revokeObjectURL(url)},30000);
+  }catch(e){alert('PDF 下載失敗，請稍後再試。')}
+  btns.forEach(function(b){b.disabled=false;b.textContent=lab||'下載 PDF'});
+}
+/* ================= 管理員模式（admin.js，於建置時插入 index.html 主程式內） =================
+   同一組帳號密碼登入即為管理員：在 #/admin 輸入 GitHub fine-grained token 一次，token 以主金鑰 DEK 加密後存入 v/<id>.key（tk），
+   之後任何裝置登入即自動解開並啟用編輯。修改後在瀏覽器內以 DEK 重新加密，透過 GitHub Git Data API 提交到 main。
+   另含：更改密碼（#/pw，只重寫 pw 包裝）、復原碼重產、忘記密碼（登入頁，用復原碼重設）、密碼滿 180 天強制更改。 */
+var REPO="dashin-team/bx-bd46878ee019", BRANCH="main", VAULT_PATH="v/88670b5daf634de2200a7a808ceb3c4c.bin", KEY_PATH="v/88670b5daf634de2200a7a808ceb3c4c.key", PDF_CSS="\n@page { size: 540px 1151px; margin:0 }\nhtml,body{margin:0;padding:0;background:#f4f9fa;-webkit-print-color-adjust:exact;print-color-adjust:exact}\n.rpt .page{width:540px;height:1151px;max-width:none;margin:0;border-radius:0;overflow:hidden;page-break-after:always;break-after:page;padding:22px 20px 0}\n.rpt .foot{position:absolute;bottom:12px;left:20px;right:20px;margin:0}\n.rpt .scrollx{overflow:visible}\n.rpt table.pay{min-width:0;font-size:8.5px}\n.rpt .pay th{font-size:8.5px;padding:5px 1px}\n.rpt .pay th.n,.rpt .pay td.n{width:64px;padding-left:4px;position:static;box-shadow:none}\n.rpt .pay th.t,.rpt .pay td.t{width:46px}\n.rpt .pay td{padding:2px 1px;height:23px}\n.rpt .pay td.n{font-size:9px}.rpt .pay td.n small{font-size:8px}\n.rpt .pay td.on i{font-size:8px;padding:3px 0;border-radius:4px;margin:0}\n.rpt .swipe{display:none}\n.rpt svg.tl{max-width:410px;margin:0 auto}\n", FIT_JS="([zmax,zmin])=>{\n const out=[];\n [...document.querySelectorAll('.page')].forEach((p,i)=>{\n   const f=p.querySelector('.foot'); const kids=[...p.children].filter(c=>c!==f && !c.classList.contains('mini'));\n   const fits=z=>{kids.forEach(k=>k.style.zoom=z); const pr=p.getBoundingClientRect();\n      const last=Math.max(...kids.map(k=>k.getBoundingClientRect().bottom))-pr.top; const ft=f.getBoundingClientRect().top-pr.top;\n      return last<=ft-6;};\n   let lo=zmin, hi=zmax[i], z;\n   if(fits(hi)) z=hi; else if(!fits(lo)) z=-lo; else {for(let t=0;t<9;t++){const m=(lo+hi)/2; if(fits(m)) lo=m; else hi=m;} z=Math.floor(lo*100)/100; fits(z);}\n   if(z>0){ if(!fits(z)){z=Math.floor((z-0.01)*100)/100; fits(z);} }\n   out.push(z);\n });\n return out;}";
+var TOKK='shAdminTok', APIK='shAdminApi';
+var ADM={on:false, who:'', models:{}, dirty:{}, removed:[], acts:[], struct:false, busy:false};
+function apiBase(){return localStorage.getItem(APIK)||'https://api.github.com'}
+function admTok(){return VK.tok||localStorage.getItem(TOKK)||''}
+async function gh(path,opt){
+  opt=opt||{}; var h={'Authorization':'Bearer '+admTok(),'Accept':opt.accept||'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'};
+  if(opt.body) h['Content-Type']='application/json';
+  var r=await fetch(apiBase()+path,{method:opt.method||'GET',headers:h,body:opt.body?JSON.stringify(opt.body):undefined,cache:'no-store',credentials:'omit'});
+  if(!r.ok){var t='';try{t=(await r.json()).message||''}catch(e){} var er=new Error('GitHub '+r.status+(t?'：'+t:'')); er.status=r.status; throw er}
+  return opt.raw?new Uint8Array(await r.arrayBuffer()):r.json();
+}
+async function admVerify(){
+  ADM.on=false; ADM.who='';
+  if(!admTok()) return false;
+  var repo=await gh('/repos/'+REPO);
+  if(!repo.permissions||!repo.permissions.push) throw new Error('此 token 對 '+REPO+' 沒有寫入權限');
+  try{var u=await gh('/user'); ADM.who=u.login||''}catch(e){ADM.who=''}
+  if(!ADM.who) ADM.who='token…'+admTok().slice(-4);
+  ADM.on=true; VK.tkErr=''; return true;
+}
+function admReset(){ADM.thDirty=false;ADM.on=false;ADM.who='';ADM.models={};ADM.dirty={};ADM.removed=[];ADM.acts=[];ADM.struct=false}
+function nDirty(){return Object.keys(ADM.dirty).length+ADM.removed.length+(ADM.struct?1:0)+(ADM.thDirty?1:0)}
+function nowIso(){var d=new Date(Date.now()+8*3600e3);return d.toISOString().slice(0,16).replace('T',' ')+'（台北）'}
+function admBar(where){
+  if(!ADM.on) return '';
+  var n=nDirty();
+  return '<div class="adm"><div class="admt">管理員模式・'+esc(ADM.who)+(n?'・<b>'+n+' 項未發布</b>':'')+'</div><div class="admb">'+
+    (where==='home'?'<button class="btn" type="button" id="aNewFam">＋ 新增家庭</button>':'')+
+    '<button class="btn pri" type="button" id="aSave"'+(n?'':' disabled')+'>儲存並發布</button>'+
+    (n?'<button class="btn" type="button" id="aDrop">捨棄變更</button>':'')+
+    '<a class="btn" href="#/th">燈號門檻</a><a class="btn" href="#/log">編輯紀錄</a><a class="btn" href="#/admin">設定</a></div></div>';
+}
+function wireBar(){
+  var b=$('aSave'); if(b) b.addEventListener('click',admSave);
+  b=$('aDrop'); if(b) b.addEventListener('click',async function(){if(!confirm('確定捨棄所有尚未發布的修改？'))return; await reloadVault(); route()});
+  b=$('aNewFam'); if(b) b.addEventListener('click',function(){
+    state.st.sf+=1; var c='a'+(state.st.sf<100?('0'+state.st.sf).slice(-2):state.st.sf);
+    while(famBy[c]){state.st.sf+=1;c='a'+state.st.sf}
+    var f={c:c,h:'',r:0,k:'',m:[]}; state.f.push(f); state.st.sm[c]=0; ADM.struct=true; ADM.acts.push('新增家庭 '+c); index(); location.hash='#/'+c;
+  });
+}
+async function reloadVault(){
+  var pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:VK.raw.slice(2,14),additionalData:enc.encode('V2')},VK.key,VK.raw.slice(14));
+  state=JSON.parse(dec.decode(pt)); RPT.setGlobalTH(state.th||null); famBy=null; cache={}; var on=ADM.on, who=ADM.who; admReset(); ADM.on=on; ADM.who=who; index();
+}
+/* ---- 金鑰檔（v/<id>.key）提交：只改這個小檔 ---- */
+async function commitKey(mut,msg){
+  var ref=await gh('/repos/'+REPO+'/git/ref/heads/'+BRANCH), head=ref.object.sha;
+  var cm=await gh('/repos/'+REPO+'/git/commits/'+head);
+  var cur=JSON.parse(dec.decode(await gh('/repos/'+REPO+'/contents/'+KEY_PATH+'?ref='+head,{accept:'application/vnd.github.raw',raw:true})));
+  await mut(cur);
+  var bl=await gh('/repos/'+REPO+'/git/blobs',{method:'POST',body:{content:b64e(enc.encode(JSON.stringify(cur))),encoding:'base64'}});
+  var t=await gh('/repos/'+REPO+'/git/trees',{method:'POST',body:{base_tree:cm.tree.sha,tree:[{path:KEY_PATH,mode:'100644',type:'blob',sha:bl.sha}]}});
+  var nc=await gh('/repos/'+REPO+'/git/commits',{method:'POST',body:{message:msg+' '+nowIso(),tree:t.sha,parents:[head]}});
+  await gh('/repos/'+REPO+'/git/refs/heads/'+BRANCH,{method:'PATCH',body:{sha:nc.sha,force:false}});
+  if(VK.K) VK.K=cur; return cur;
+}
+async function sealW(secret,tag,obj){
+  var salt=rnd(16), it=ITER_MIN, key=await pbk(secret,salt,it), iv=rnd(12);
+  var ct=new Uint8Array(await crypto.subtle.encrypt({name:'AES-GCM',iv:iv,additionalData:enc.encode(tag)},key,enc.encode(JSON.stringify(obj))));
+  return {it:it,salt:b64e(salt),iv:b64e(iv),ct:b64e(ct)};
+}
+async function sealTok(tok){
+  var iv=rnd(12), ct=new Uint8Array(await crypto.subtle.encrypt({name:'AES-GCM',iv:iv,additionalData:enc.encode('tk')},VK.key,enc.encode(JSON.stringify({t:tok}))));
+  return {iv:b64e(iv),ct:b64e(ct)};
+}
+function todayTPE(){return new Date(Date.now()+8*3600e3).toISOString().slice(0,10)}
+function wrapPw(acc,pw,dk){return sealW(acc+'\n'+pw,'pw',{k:b64e(dk),d:todayTPE()})}
+var RCA='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+function newRc(){var a=rnd(30),g=[];for(var i=0;i<6;i++){var s='';for(var j=0;j<5;j++)s+=RCA[a[i*5+j]%32];g.push(s)}return g.join('-')}
+function normRc(c){return String(c).toUpperCase().split('').filter(function(x){return RCA.indexOf(x)>=0}).join('')}
+function pwRule(a,b){if(a.length<8) return '新密碼至少 8 個字'; if(a!==b) return '兩次輸入的新密碼不一樣'; return ''}
+function setupNote(){
+  if(ADM.on) return '';
+  if(VK.tkErr) return '<div class="setup">編輯功能目前無法使用（GitHub token 可能已過期或被刪除：'+esc(VK.tkErr)+'）。<a href="#/admin">重新設定 token</a></div>';
+  if(VK.K&&!VK.K.tk&&!localStorage.getItem(TOKK)) return '<div class="setup">尚未完成編輯設定（只需做一次，之後任何裝置登入都可直接編輯）：<a href="#/admin">前往設定</a></div>';
+  return '';
+}
+/* ---- 設定頁 ---- */
+function showAdmin(){
+  document.title='保單健檢'; $('back').hidden=false; $('back').href='#/'; $('bt').textContent='管理員設定';
+  var has=!!(VK.K&&VK.K.tk)||!!localStorage.getItem(TOKK);
+  $('view').innerHTML='<h1>管理員設定</h1><p class="sub">輸入對網站 repo 有寫入權的 GitHub fine-grained token（只需一次）。token 會用網站主金鑰加密後存到網站，之後任何裝置用同一組帳密登入都可直接編輯。</p>'+
+   '<div class="card adf"><div id="aSt">'+(ADM.on?'✅ 已啟用管理員模式（'+esc(ADM.who)+'）':(has?'已存 token，尚未驗證成功':'尚未設定'))+'</div>'+
+   '<label for="aTok">GitHub token</label><input id="aTok" type="password" autocomplete="off" spellcheck="false" placeholder="github_pat_…">'+
+   '<div class="admb"><button class="btn pri" type="button" id="aOk">驗證並儲存</button>'+(ADM.on?'<button class="btn" type="button" id="aRm">從網站移除 token</button>':'')+'</div><div id="aErr" class="aerr"></div></div>'+
+   '<div class="card adf"><div class="ah">密碼</div><div class="admb"><a class="btn" href="#/pw">更改密碼</a></div>'+(VK.pwd?'<div class="rnote2">目前密碼設定於 '+esc(VK.pwd)+'，每 '+PW_MAX_DAYS+' 天需更改一次（已 '+pwAgeDays(VK.pwd)+' 天）。</div>':'')+'</div>'+
+   (ADM.on?'<div class="card adf"><div class="ah">復原碼（忘記密碼時用）</div><div class="rnote2">重新產生後舊復原碼立即失效；新復原碼只顯示這一次，請抄下或拍照收好。</div><div class="admb"><button class="btn" type="button" id="aRc">重新產生復原碼</button></div><div id="aRcOut"></div></div>':'');
+  $('aOk').addEventListener('click',async function(){
+    var v=$('aTok').value.trim(); if(!v&&!has){$('aErr').textContent='請輸入 token';return}
+    var old=VK.tok; if(v) VK.tok=v;
+    this.disabled=true; $('aErr').textContent='驗證中…';
+    try{await admVerify();
+      if(v){$('aErr').textContent='儲存中…'; var tk=await sealTok(v); await commitKey(function(K){K.tk=tk},'設定管理 token'); localStorage.removeItem(TOKK)}
+      $('aTok').value=''; location.hash='#/'}
+    catch(e){ VK.tok=old; ADM.on=false; if(old) admVerify().catch(function(){}); $('aErr').textContent='無法啟用：'+e.message; this.disabled=false}
+  });
+  var rm=$('aRm'); if(rm) rm.addEventListener('click',async function(){
+    if(!confirm('移除後，所有裝置都無法編輯，直到重新設定 token。確定？')) return;
+    try{await commitKey(function(K){K.tk=null},'移除管理 token')}catch(e){alert('移除失敗：'+e.message);return}
+    localStorage.removeItem(TOKK); VK.tok=null; admReset(); showAdmin()});
+  var rc=$('aRc'); if(rc) rc.addEventListener('click',async function(){
+    if(!confirm('重新產生後舊復原碼會失效，確定？')) return;
+    this.disabled=true; var code=newRc();
+    try{var w=await sealW('rc1\n'+normRc(code),'rc',{k:b64e(VK.dk)}); await commitKey(function(K){K.rc=w},'重新產生復原碼');
+      $('aRcOut').innerHTML='<div class="rcbox" id="rcNew">'+code+'</div><div class="rnote2">請現在抄下。離開此頁後不會再顯示。</div>'}
+    catch(e){$('aRcOut').innerHTML='<div class="aerr">失敗：'+esc(e.message)+'</div>'; this.disabled=false}
+  });
+}
+/* ---- 更改密碼（含 180 天強制） ---- */
+function showPw(forced){
+  document.title='更改密碼'; $('back').hidden=!!forced; $('back').href='#/admin'; $('bt').textContent='更改密碼';
+  var can=!!admTok();
+  $('view').innerHTML='<h1>更改密碼</h1>'+(forced?'<div class="setup" id="pwForce">密碼已使用超過 '+PW_MAX_DAYS+' 天（設定於 '+esc(VK.pwd)+'），為了安全請先更改密碼才能繼續使用。</div>':'')+
+   (can?'':'<div class="setup">更改密碼需要先完成一次管理設定（GitHub token）。<a href="#/admin">前往設定</a></div>')+
+   '<form class="card adf" id="pwf" autocomplete="off"><input type="text" autocomplete="username" value="'+esc(VK.acc||'')+'" hidden>'+
+   '<label for="po">目前密碼</label><input id="po" type="password" autocomplete="current-password">'+
+   '<label for="pn1">新密碼（至少 8 個字）</label><input id="pn1" type="password" autocomplete="new-password">'+
+   '<label for="pn2">再輸入一次新密碼</label><input id="pn2" type="password" autocomplete="new-password">'+
+   '<div class="admb"><button class="btn pri" type="submit" id="pwGo"'+(can?'':' disabled')+'>更改密碼</button></div><div id="pwErr" class="aerr"></div></form>';
+  $('pwf').addEventListener('submit',async function(ev){
+    ev.preventDefault(); var o=norm($('po').value), a=norm($('pn1').value), b=norm($('pn2').value), er=$('pwErr'), bt=$('pwGo');
+    var r=pwRule(a,b); if(!r&&a===o) r='新密碼不能和目前密碼相同'; if(r){er.textContent=r;return}
+    bt.disabled=true; er.textContent='驗證目前密碼…';
+    try{ try{await unwrapW(VK.K.pw,VK.acc+'\n'+o,'pw')}catch(e){throw new Error('目前密碼不正確')}
+      er.textContent='加密並上傳中…'; var w=await wrapPw(VK.acc,a,VK.dk);
+      await commitKey(function(K){K.pw=w},'更改密碼');
+      VK.pwd=todayTPE(); VK.expired=false; ['po','pn1','pn2'].forEach(function(i){$(i).value=''});
+      alert('密碼已更改。之後請用新密碼登入（各裝置下次登入生效；舊密碼已無法登入）。'); location.hash='#/'; route();
+    }catch(e){er.textContent='更改失敗：'+e.message; bt.disabled=false}
+  });
+}
+/* ---- 忘記密碼（登入頁，用復原碼） ---- */
+$('fg').addEventListener('click',function(e){e.preventDefault(); $('lf').hidden=true; $('fgf').hidden=false; $('ferr').textContent=''});
+$('fbk').addEventListener('click',function(e){e.preventDefault(); $('fgf').hidden=true; $('lf').hidden=false});
+$('fgf').addEventListener('submit',async function(ev){
+  ev.preventDefault(); var acc=norm($('fu').value).trim(), code=normRc($('fr').value), a=norm($('fn1').value), b=norm($('fn2').value), er=$('ferr'), bt=$('fgo');
+  var r=pwRule(a,b); if(!acc||code.length<20) r='請輸入帳號與完整的復原碼'; if(r){er.textContent=r;return}
+  bt.disabled=true; er.textContent='驗證復原碼…';
+  try{
+    var lk=await lookupId(acc), K, o;
+    try{K=await getKeyFile(lk,true)}catch(e){K=await getKeyFile(lk,false)}
+    try{o=await unwrapW(K.rc,'rc1\n'+code,'rc')}catch(e){throw new Error('帳號或復原碼不正確')}
+    state=await useDek(K,b64(o.k),lk); VK.acc=acc;
+    if(!VK.tok){state=null; VK={key:null,raw:null}; throw new Error('網站尚未完成管理設定（GitHub token），無法線上重設，請聯絡助理在 box 上重設。')}
+    er.textContent='設定新密碼中…'; var w=await wrapPw(acc,a,VK.dk);
+    await commitKey(function(K2){K2.pw=w},'用復原碼重設密碼');
+    VK.pwd=todayTPE(); VK.expired=false; ['fu','fr','fn1','fn2'].forEach(function(i){$(i).value=''}); er.textContent='';
+    afterLogin(); alert('密碼已重設並登入。之後請用新密碼登入；復原碼仍可再使用，建議到「設定」重新產生一組。');
+  }catch(e){state=null; VK={key:null,raw:null}; admReset(); er.textContent=e.message||'重設失敗'}
+  finally{bt.disabled=false}
+});
+/* ---- 模型載入 ---- */
+async function getModel(mb){
+  if(ADM.models[mb.c]) return ADM.models[mb.c];
+  var J;
+  if(mb.mf) J=JSON.parse(dec.decode(await openFile(mb.mf,mb.mk)));
+  else J={model:{v:1,name:mb.n,age:mb.a,flags:[],policies:[]},ov:{}};
+  J.orig=JSON.stringify(J.model); J.origOv=JSON.stringify(J.ov||{}); if(!J.ov) J.ov={};
+  ADM.models[mb.c]=J; return J;
+}
+function touch(mb){
+  var J=ADM.models[mb.c]; var r=RPT.reportFromModel(J.model,J.ov);
+  mb.n=J.model.name; mb.a=J.model.age; mb.np=r.policies.length;
+  mb.pm=Math.trunc(r.policies.reduce(function(t,p){return t+(typeof p.premium==='number'?p.premium:0)},0));
+  mb.lw=r.rates.filter(function(x){return x.level==='low'}).map(function(x){return x.name}).slice(0,3);
+  ADM.dirty[mb.c]=1; delete cache[mb.c]; return r;
+}
+/* ---- 家庭頁的管理工具 ---- */
+function famTools(f){
+  if(!ADM.on) return '';
+  var opts=state.f.filter(function(g){return g!==f}).map(function(g){return '<option value="'+g.c+'">'+g.c+'（'+esc(g.m.map(function(m){return m.n}).join('、').slice(0,14))+'）</option>'}).join('');
+  var h='<div class="card adf"><div class="admb"><button class="btn pri" type="button" id="aAdd">＋ 新增客戶</button></div>';
+  f.m.forEach(function(mb){
+    h+='<div class="arow"><b>'+esc(mb.n)+'</b><span class="ac">'+mb.c+'</span><a class="btn" href="#/edit/'+mb.c+'">編輯</a>'+
+       '<select data-mv="'+mb.c+'"><option value="">移到…</option><option value="__new">新家庭</option>'+opts+'</select>'+
+       '<button class="btn dang" type="button" data-rm="'+mb.c+'">移除</button></div>';
+  });
+  return h+'<div class="rnote2">移動後代號不變（網址仍有效）；新增客戶取得此家庭的下一個代號；移除不會讓其他人重新編號。</div></div>';
+}
+function wireFam(f){
+  if(!ADM.on) return;
+  $('aAdd').addEventListener('click',function(){
+    var nm=(prompt('新客戶姓名')||'').trim(); if(!nm) return;
+    var ag=parseInt(prompt('保險年齡（數字）','30'),10); if(isNaN(ag)||ag<0||ag>120){alert('年齡需為 0–120');return}
+    state.st.sm[f.c]=(state.st.sm[f.c]||0)+1; var c=f.c+'-'+state.st.sm[f.c];
+    while(memBy[c]){state.st.sm[f.c]+=1;c=f.c+'-'+state.st.sm[f.c]}
+    var mb={c:c,n:nm,a:ag,np:0,pm:0,lw:[],rf:null,rk:null,rz:0,pf:null,pk:null,mf:null,mk:null,ps:1,nw:1};
+    ADM.models[c]={model:{v:1,name:nm,age:ag,flags:[],policies:[]},ov:{},orig:'',origOv:'{}'};
+    f.m.push(mb); index(); touch(mb); ADM.struct=true; ADM.acts.push('新增客戶 '+c+' '+nm+'（家庭 '+f.c+'）'); location.hash='#/edit/'+c;
+  });
+  [].forEach.call(document.querySelectorAll('[data-mv]'),function(s){s.addEventListener('change',function(){
+    var mb=memBy[s.dataset.mv], to=s.value; if(!to) return;
+    if(to==='__new'){state.st.sf+=1; var c='a'+(state.st.sf<100?('0'+state.st.sf).slice(-2):state.st.sf); while(famBy[c]){state.st.sf+=1;c='a'+state.st.sf}
+      state.f.push({c:c,h:'',r:0,k:'',m:[]}); state.st.sm[c]=0; to=c; ADM.acts.push('新增家庭 '+c)}
+    var from=mb.f; from.m.splice(from.m.indexOf(mb),1); state.f.filter(function(g){return g.c===to})[0].m.push(mb);
+    ADM.struct=true; ADM.acts.push('移動 '+mb.c+' '+mb.n+'：家庭 '+from.c+' → '+to); index(); showFamily(famBy[from.c]||famBy[to]);
+  })});
+  [].forEach.call(document.querySelectorAll('[data-rm]'),function(b){b.addEventListener('click',function(){
+    var mb=memBy[b.dataset.rm]; if(!confirm('確定從網站移除「'+mb.n+'」（'+mb.c+'）？發布後其報告、PDF 會從網站刪除；代號不會再使用。')) return;
+    mb.f.m.splice(mb.f.m.indexOf(mb),1); if(!mb.nw) ADM.removed.push(mb); delete ADM.dirty[mb.c]; delete ADM.models[mb.c];
+    state.st.rt.push(mb.c); ADM.struct=true; ADM.acts.push('移除 '+mb.c+' '+mb.n); index(); showFamily(famBy[mb.f.c]);
+  })});
+}
+/* ---- 報告編輯器 #/edit/<代號> ---- */
+var FREQS=['年繳','半年繳','季繳','月繳','躉繳','彈性繳',''], TAGS=['優先','建議','確認','維持'];
+function sel(path,v,list,lab){return '<select data-p="'+path+'">'+list.map(function(o){var val=Array.isArray(o)?o[0]:o, t=Array.isArray(o)?o[1]:(o||'（未顯示）');return '<option value="'+esc(val)+'"'+(String(v===null||v===undefined?'':v)===String(val)?' selected':'')+'>'+esc(t)+'</option>'}).join('')+'</select>'}
+function inp(path,v,type,ph,cls){return '<input data-p="'+path+'" type="'+(type||'text')+'" value="'+esc(v===null||v===undefined?'':v)+'"'+(ph?' placeholder="'+esc(ph)+'"':'')+(cls?' class="'+cls+'"':'')+'>'}
+function chk(path,v,lab){return '<label class="ck"><input data-p="'+path+'" type="checkbox"'+(v?' checked':'')+'>'+lab+'</label>'}
+function fld(lab,html){return '<div class="fl"><span>'+lab+'</span>'+html+'</div>'}
+function catOpts(){return Object.keys(RPT.CATLBL).map(function(k){return [k,RPT.CATLBL[k]+'（'+k+'）']})}
+function ageOf(M,iso){return iso?(M.age+(parseInt(iso.slice(0,4),10)-RPT.BASE_YEAR)):''}
+function formData(M){
+  var h='<div class="card adf"><div class="ah">客戶</div>'+fld('姓名',inp('name',M.name))+fld('保險年齡',inp('age',M.age,'number'))+fld('客戶職業等級（顯示在報告封面）',inp('occ',M.occ,'text','如 1、第 2 類'))+'</div>'+formHH(M);
+  M.policies.forEach(function(P,pi){
+    var b='p.'+pi+'.';
+    h+='<div class="card adf"><div class="ah">保單 '+(pi+1)+'：'+esc(P.mname||'')+'（…'+esc((P.code||'').replace(/-00$/,''))+'）<button class="btn dang sm" type="button" data-act="delp" data-i="'+pi+'">刪除保單</button></div>'+
+      '<div class="g2">'+fld('後四碼-序號',inp(b+'code',P.code))+fld('商品名稱',inp(b+'mname',P.mname))+fld('商品代碼',inp(b+'mcode',P.mcode))+fld('公司',inp(b+'company',P.company))+
+      fld('契約狀態',inp(b+'status',P.status))+fld('幣別',sel(b+'cur',P.cur,[['NT','台幣'],['USD','美元']]))+fld('繳別',sel(b+'freq_txt',P.freq_txt||'',FREQS))+fld('繳費方式',inp(b+'method',P.method))+
+      fld('契約始期',inp(b+'start',P.start,'date'))+fld('繳費期滿日',inp(b+'pay_end',P.pay_end,'date'))+fld('保障期間（顯示用）',inp(b+'cov_txt',P.cov_txt,'text','終身／115/10/27'))+fld('職業等級',inp(b+'occ_txt',P.occ_txt))+
+      fld('受益人',inp(b+'ben',P.ben))+fld('主約類型',sel(b+'mcat',P.mcat,catOpts()))+'</div>'+chk(b+'ben_flag',P.ben_flag,'受益人資料不完整')+chk(b+'no_detail',P.no_detail,'缺明細頁');
+    P.items.forEach(function(x,xi){
+      var c=b+'i.'+xi+'.';
+      h+='<div class="itm"><div class="ih">'+(x.main?'主約':'附約')+' '+esc(x.code||'')+' '+esc(x.short||'')+'<button class="btn dang sm" type="button" data-act="deli" data-i="'+pi+'" data-j="'+xi+'">刪除</button></div><div class="g2">'+
+        fld('代碼',inp(c+'code',x.code))+fld('名稱',inp(c+'short',x.short))+fld('險種分類',sel(c+'cat',x.cat,catOpts()))+
+        fld('保額（數字，'+(P.cur==='USD'?'美元':'元')+'）',inp(c+'amt',x.amt_kind==='NT'||x.amt_kind==='USD'?x.amt:'','number','空白＝未顯示'))+fld('保額顯示文字',inp(c+'amt_txt',x.amt_txt,'text','如 日額 1,000'))+
+        fld('每期保費',inp(c+'prem',x.prem,'number'))+fld('繳費期滿日',inp(c+'pay_end',x.pay_end,'date'))+
+        fld('保障期滿日',inp(c+'cov_end',x.cov_end,'date'))+fld('期滿年齡',inp(c+'cov_age',x.life?'':ageOf(M,x.cov_end),'number','終身免填'))+fld('狀態',inp(c+'status',x.status))+
+        '</div>'+chk(c+'life',x.life,'終身')+chk(c+'main',x.main,'主約')+chk(c+'dep',x.dep,'眷屬附約（非本人）')+chk(c+'bad',x.bad,'不列入（已終止）')+'</div>';
+    });
+    h+='<button class="btn sm" type="button" data-act="addi" data-i="'+pi+'">＋ 新增附約</button></div>';
+  });
+  h+='<div class="admb"><button class="btn pri" type="button" data-act="addp">＋ 新增保單</button></div>';
+  return h;
+}
+function isMan(ov,t){if(t==='key'||t==='closing') return !!ov[t]; if(t.indexOf('med.')===0) return !!(ov.med&&ov.med[t.slice(4)]); return !!(ov.gap&&ov.gap[t.slice(4)])}
+function formHH(M){
+  var hh=M.hh||{on:false,living:300000,mortgage:0,debt:0,members:[]}, np=RPT.hhNeed(hh);
+  var h='<div class="card adf"><div class="ah">家庭成員與家庭責任（計算壽險缺口）</div>'+chk('hh.on',hh.on,'納入報告計算（燈號、重點數字、缺口建議）')+
+    (hh.ref?'<div class="rnote2">成員預設由同家庭分組帶入，只供參考，請確認稱謂、年齡與是否需扶養。</div>':'')+
+    '<div class="g2">'+fld('年生活費（每位受扶養者，元）',inp('hh.living',hh.living,'number'))+fld('房貸餘額（元）',inp('hh.mortgage',hh.mortgage,'number'))+fld('其他負債（元）',inp('hh.debt',hh.debt,'number'))+'</div>';
+  (hh.members||[]).forEach(function(m,i){var b='hh.m.'+i+'.';
+    h+='<div class="itm"><div class="ih">成員 '+(i+1)+'<button class="btn dang sm" type="button" data-act="delm" data-i="'+i+'">刪除</button></div><div class="g2">'+
+      fld('稱謂／關係',inp(b+'rel',m.rel,'text','配偶、子女、父母'))+fld('年齡',inp(b+'age',m.age,'number'))+fld('扶養年數',inp(b+'years',m.years,'number'))+fld('教育費（元）',inp(b+'edu',m.edu,'number'))+'</div>'+chk(b+'dep',m.dep,'需扶養')+'</div>'});
+  h+='<div class="admb"><button class="btn sm" type="button" data-act="addm">＋ 新增成員</button><button class="btn sm" type="button" data-act="refm">由同家庭分組帶入（參考）</button></div>';
+  return h+'<div class="rnote2">目前估算家庭責任額：<b id="hhN">'+RPT.fmtNt(np[0])+'</b>（扶養年數×年生活費＋教育費＋房貸＋負債）</div></div>';
+}
+function manTag(on,key){return on?'<span class="man">手動</span><button class="btn sm" type="button" data-act="revert" data-k="'+key+'">還原自動</button>':'<span class="auto">自動</span>'}
+function formText(J){
+  var auto=RPT.reportFromModel(J.model,null,{auto:true}), ov=J.ov, h='<div class="card adf"><div class="ah">文字（可手動改寫；數字變動時「自動」文字會跟著重算，「手動」文字保留）</div>';
+  h+='<div class="tx"><div class="tl2">一句話重點 <span class="mt">'+manTag(!!ov.key,'key')+'</span></div><textarea data-t="key" rows="3">'+esc(ov.key?ov.key.t:auto.key)+'</textarea>'+(ov.key?'<div class="rnote2">自動版本：'+esc(auto.key)+'</div>':'')+'</div>';
+  auto.medical.forEach(function(st,i){var o=(ov.med||{})[i];
+    h+='<div class="tx"><div class="tl2">'+esc(st.title)+' 說明 <span class="mt">'+manTag(!!o,'med.'+i)+'</span></div><textarea data-t="med.'+i+'" rows="2">'+esc(o?o.t:st.sentence)+'</textarea></div>'});
+  h+='<div class="ah">缺口與建議（自動依規則排序；可改內文、隱藏或新增）</div>';
+  auto.gaps.forEach(function(g){var o=(ov.gap||{})[g.title], hid=(ov.hide||[]).indexOf(g.title)>=0;
+    h+='<div class="tx"><div class="tl2">['+esc(g.tag)+'] '+esc(g.title)+' <span class="mt">'+manTag(!!o,'gap.'+g.title)+'</span><label class="ck"><input type="checkbox" data-hide="'+esc(g.title)+'"'+(hid?' checked':'')+'>隱藏</label></div><textarea data-t="gap.'+esc(g.title)+'" rows="3">'+esc(o?o.t:g.body)+'</textarea></div>'});
+  Object.keys(ov.gap||{}).forEach(function(t){if(!auto.gaps.some(function(g){return g.title===t})) h+='<div class="rnote2">手動內文「'+esc(t)+'」目前規則未產生此項，暫不顯示（資料改回時會再出現）。<button class="btn sm" type="button" data-act="revert" data-k="gap.'+esc(t)+'">刪除</button></div>'});
+  (ov.extra||[]).forEach(function(g,i){
+    h+='<div class="tx"><div class="tl2"><span class="man">手動新增</span><button class="btn dang sm" type="button" data-act="delx" data-i="'+i+'">刪除</button></div><div class="g2">'+
+      '<div class="fl"><span>標題</span><input data-x="'+i+'.title" value="'+esc(g.title)+'"></div><div class="fl"><span>標籤</span><select data-x="'+i+'.tag">'+TAGS.map(function(t){return '<option'+(t===g.tag?' selected':'')+'>'+t+'</option>'}).join('')+'</select></div></div><textarea data-x="'+i+'.body" rows="3">'+esc(g.body)+'</textarea></div>'});
+  h+='<button class="btn sm" type="button" data-act="addx">＋ 新增一項建議</button>';
+  h+='<div class="tx"><div class="tl2">結語 <span class="mt">'+manTag(!!ov.closing,'closing')+'</span></div><textarea data-t="closing" rows="2">'+esc(ov.closing?ov.closing.t:auto.closing)+'</textarea></div></div>';
+  return h;
+}
+async function showEdit(code){
+  var mb=memBy[code]; if(!mb||!ADM.on){location.replace('#/');return}
+  $('back').hidden=false; $('back').href='#/'+mb.c; $('bt').textContent='編輯 '+mb.n; document.title='保單健檢';
+  var v=$('view'); v.innerHTML='<div id="msg">資料解密中…</div>';
+  var J; try{J=await getModel(mb)}catch(e){v.innerHTML='<div id="msg">資料讀取失敗</div>';return}
+  if(location.hash!=='#/edit/'+code) return;
+  v.innerHTML=admBar('edit')+'<div id="eW"><h1>編輯 '+esc(mb.n)+'</h1><p class="sub">'+mb.c+'・修改後下方預覽與綠黃紅、4 個重點數字、缺口會即時重算</p><div id="eD"></div><div id="eT"></div><h2 class="ph2">即時預覽</h2><div id="eP"></div></div>';
+  wireBar(); v=$('eW');
+  function drawD(){$('eD').innerHTML=formData(J.model)} function drawT(){$('eT').innerHTML=formText(J)}
+  var pT=null;
+  function preview(now){clearTimeout(pT); pT=setTimeout(function(){var r=touch(mb); $('eP').innerHTML=RPT.renderWeb(r); var t=$('bt'); if(t) t.textContent='編輯 '+mb.n; var a=document.querySelector('.admt'); if(a) a.innerHTML='管理員模式・'+esc(ADM.who)+'・<b>'+nDirty()+' 項未發布</b>'; var s=$('aSave'); if(s) s.disabled=false},now?0:150)}
+  drawD(); drawT(); $('eP').innerHTML=RPT.renderWeb(RPT.reportFromModel(J.model,J.ov));
+  var tT=null;
+  v.addEventListener('input',function(ev){
+    var el=ev.target, p=el.dataset.p, t=el.dataset.t, x=el.dataset.x;
+    if(p){setPath(J.model,p,el); preview(); clearTimeout(tT); tT=setTimeout(drawT,600);
+      if(/\.(cov_age|cov_end|life)$/.test(p)||p==='age'){var m=p.match(/^p\.(\d+)\.i\.(\d+)\./); if(m){var o=document.querySelector('[data-p="p.'+m[1]+'.i.'+m[2]+'.'+(/cov_age$/.test(p)?'cov_end':'cov_age')+'"]'); var it=J.model.policies[+m[1]].items[+m[2]]; if(o) o.value=/cov_age$/.test(p)?(it.cov_end||''):(it.life?'':ageOf(J.model,it.cov_end))}}
+      return}
+    if(t){setText(J,t,el.value); preview(); var mt=el.parentNode.querySelector('.mt'); if(mt) mt.innerHTML=manTag(isMan(J.ov,t),t); return}
+    if(x){var q=x.split('.'); J.ov.extra[+q[0]][q[1]]=el.value; preview()}
+  });
+  v.addEventListener('change',function(ev){
+    var el=ev.target;
+    if(el.dataset.hide!==undefined){var hs=J.ov.hide||(J.ov.hide=[]), t=el.dataset.hide, i=hs.indexOf(t); if(el.checked&&i<0) hs.push(t); if(!el.checked&&i>=0) hs.splice(i,1); if(!hs.length) delete J.ov.hide; preview(true); return}
+    if(el.dataset.p&&(el.type==='checkbox'||el.tagName==='SELECT')){setPath(J.model,el.dataset.p,el); preview(true); drawT(); if(/\.(cur|life)$/.test(el.dataset.p)) drawD()}
+    if(el.dataset.t){drawT()}
+  });
+  v.addEventListener('click',function(ev){
+    var b=ev.target.closest('[data-act]'); if(!b) return; var a=b.dataset.act, M=J.model;
+    if(a==='addp') M.policies.push({code:'0000-01',cur:'NT',status:'有效',start:null,freq_txt:'年繳',pay_end:null,cov_txt:'終身',method:'銀行轉帳',occ_txt:'明細頁未顯示',ben:'明細頁未顯示',ben_flag:false,mcode:'',mcat:'UNKNOWN',mname:'手動新增保單',company:'富邦人壽',no_detail:false,items:[newItem(true)]});
+    else if(a==='delp'){if(!confirm('刪除這張保單？'))return; M.policies.splice(+b.dataset.i,1)}
+    else if(a==='addm'||a==='refm'){var hh=M.hh||(M.hh={on:false,living:300000,mortgage:0,debt:0,members:[]});
+      if(a==='addm') hh.members.push(RPT.hhDefaultMember('配偶',40));
+      else{var f=memBy[code].f; f.m.forEach(function(o){if(o.c!==code) hh.members.push(RPT.hhDefaultMember('同組家人（參考，請改稱謂）',o.a))}); hh.ref=true}}
+    else if(a==='delm') M.hh.members.splice(+b.dataset.i,1);
+    else if(a==='addi') M.policies[+b.dataset.i].items.push(newItem(false));
+    else if(a==='deli') M.policies[+b.dataset.i].items.splice(+b.dataset.j,1);
+    else if(a==='revert'){var k=b.dataset.k; if(k==='key'||k==='closing') delete J.ov[k]; else if(k.indexOf('med.')===0){delete J.ov.med[k.slice(4)]; if(!Object.keys(J.ov.med).length) delete J.ov.med} else if(k.indexOf('gap.')===0){delete J.ov.gap[k.slice(4)]; if(!Object.keys(J.ov.gap).length) delete J.ov.gap} drawT(); preview(true); return}
+    else if(a==='addx'){(J.ov.extra||(J.ov.extra=[])).push({title:'新的建議',tag:'建議',body:'內容'}); drawT(); preview(true); return}
+    else if(a==='delx'){J.ov.extra.splice(+b.dataset.i,1); if(!J.ov.extra.length) delete J.ov.extra; drawT(); preview(true); return}
+    else return;
+    drawD(); drawT(); preview(true);
+  });
+}
+function newItem(main){return {code:'',cat:'UNKNOWN',short:main?'主約':'附約',main:!!main,dep:false,rel:null,status:'有效',bad:false,prem:0,pay_end:null,life:true,cov_end:null,amt_kind:'NA',amt:null,amt_txt:''}}
+function setPath(M,p,el){
+  var q=p.split('.'), v=el.type==='checkbox'?el.checked:el.value;
+  if(q[0]==='name'){M.name=v;return}
+  if(q[0]==='occ'){M.occ=v;return}
+  if(q[0]==='hh'){var hh=M.hh||(M.hh={on:false,living:300000,mortgage:0,debt:0,members:[]});
+    if(q[1]==='m'){var m=hh.members[+q[2]]; m[q[3]]=(q[3]==='rel'||q[3]==='dep')?v:(v===''?0:Number(v))}
+    else hh[q[1]]=q[1]==='on'?v:(v===''?0:Number(v));
+    var n=$('hhN'); if(n) n.textContent=RPT.fmtNt(RPT.hhNeed(hh)[0]); return} if(q[0]==='age'){var a=parseInt(v,10); if(!isNaN(a)) M.age=a; return}
+  var P=M.policies[+q[1]];
+  if(q[2]!=='i'){var k=q[2]; if(k==='start'||k==='pay_end') v=v||null; if(k==='freq_txt') v=v||null; P[k]=v; if(k==='cur') P.items.forEach(function(x){if(x.amt_kind==='NT'||x.amt_kind==='USD') RPT.setAmount(P,x,x.amt)}); return}
+  var x=P.items[+q[3]], f=q[4];
+  if(f==='amt'){RPT.setAmount(P,x,v===''?null:Number(v)); var t=document.querySelector('[data-p="'+p.replace(/amt$/,'amt_txt')+'"]'); if(t) t.value=x.amt_txt; return}
+  if(f==='amt_txt'){x.amt_txt=v; if(x.amt_kind==='NA'&&v) x.amt_kind='UNIT'; if(!v&&x.amt_kind==='UNIT') x.amt_kind='NA'; return}
+  if(f==='prem'){x.prem=v===''?0:Number(v); return}
+  if(f==='cov_age'){var ag=parseInt(v,10); if(isNaN(ag)) return; x.life=false; x.cov_end=RPT.isoFromYear(RPT.BASE_YEAR+(ag-M.age),x.cov_end); var cb=document.querySelector('[data-p="'+p.replace(/cov_age$/,'life')+'"]'); if(cb) cb.checked=false; return}
+  if(f==='cov_end'||f==='pay_end'){x[f]=v||null; if(f==='cov_end'&&v) x.life=false; return}
+  if(f==='life'){x.life=v; return}
+  x[f]=v;
+}
+function setText(J,t,val){
+  var auto=RPT.reportFromModel(J.model,null,{auto:true}), ov=J.ov, mk={t:val,at:nowIso(),by:ADM.who};
+  if(t==='key'||t==='closing'){ if(val===auto[t]) delete ov[t]; else ov[t]=mk; return}
+  if(t.indexOf('med.')===0){var i=t.slice(4); ov.med=ov.med||{}; if(val===auto.medical[+i].sentence) delete ov.med[i]; else ov.med[i]=mk; if(!Object.keys(ov.med).length) delete ov.med; return}
+  if(t.indexOf('gap.')===0){var ti=t.slice(4), g=auto.gaps.filter(function(x){return x.title===ti})[0]; ov.gap=ov.gap||{}; if(g&&val===g.body) delete ov.gap[ti]; else ov.gap[ti]=mk; if(!Object.keys(ov.gap).length) delete ov.gap}
+}
+/* ---- 差異摘要（編輯紀錄用） ---- */
+function diffModel(a,b){
+  var out=[]; if(!a){return ['新建資料：'+b.name+'、保險年齡 '+b.age+'、保單 '+b.policies.length+' 張'].concat(b.policies.map(function(P){return '保單 …'+P.code+' '+P.mname+'：'+P.items.map(function(x){return (x.code||x.short)+' '+(RPT.CATLBL[x.cat]||x.cat)+' '+(x.amt_txt||'')+(x.prem?'／保費 '+x.prem:'')}).join('；')}))}
+  if(a.name!==b.name) out.push('姓名 '+a.name+' → '+b.name);
+  if(a.age!==b.age) out.push('年齡 '+a.age+' → '+b.age);
+  if((a.occ||'')!==(b.occ||'')) out.push('客戶職業等級 '+fmtv(a.occ)+' → '+fmtv(b.occ));
+  if(JSON.stringify(a.hh||null)!==JSON.stringify(b.hh||null)){var hb=b.hh||{}; out.push('家庭責任資料：'+(hb.on?'納入計算':'不計算')+'、成員 '+(hb.members||[]).length+' 位（'+(hb.members||[]).map(function(m){return m.rel+' '+m.age+'歲'+(m.dep?'・扶養'+m.years+'年':'')}).join('、')+'）、年生活費 '+(hb.living||0)+'、房貸 '+(hb.mortgage||0)+'、負債 '+(hb.debt||0))}
+  var ka={}; (a.policies||[]).forEach(function(P){ka[P.code]=P}); var kb={}; b.policies.forEach(function(P){kb[P.code]=P});
+  Object.keys(ka).forEach(function(c){if(!kb[c]) out.push('刪除保單 …'+c)});
+  b.policies.forEach(function(P){
+    var O=ka[P.code]; if(!O){out.push('新增保單 …'+P.code+' '+P.mname);return}
+    Object.keys(P).forEach(function(k){if(k!=='items'&&JSON.stringify(P[k])!==JSON.stringify(O[k])) out.push('…'+P.code+' '+fl(k)+'：'+fmtv(O[k])+' → '+fmtv(P[k]))});
+    var n=Math.max(P.items.length,O.items.length);
+    for(var i=0;i<n;i++){var x=P.items[i], y=O.items[i];
+      if(!y){out.push('…'+P.code+' 新增項目 '+(x.code||x.short));continue} if(!x){out.push('…'+P.code+' 刪除項目 '+(y.code||y.short));continue}
+      Object.keys(x).forEach(function(k){if(JSON.stringify(x[k])!==JSON.stringify(y[k])&&k!=='amt_kind') out.push('…'+P.code+' '+(x.code||x.short)+' '+fl(k)+'：'+fmtv(y[k])+' → '+fmtv(x[k]))});
+    }
+  });
+  return out;
+}
+var FLBL={code:'代碼',mname:'商品名稱',mcode:'商品代碼',company:'公司',status:'狀態',cur:'幣別',freq_txt:'繳別',method:'繳費方式',start:'契約始期',pay_end:'繳費期滿',cov_txt:'保障期間',occ_txt:'職業等級',ben:'受益人',ben_flag:'受益人不完整',mcat:'主約類型',no_detail:'缺明細',cat:'險種',short:'名稱',main:'主約',dep:'眷屬',rel:'關係',bad:'不列入',prem:'保費',life:'終身',cov_end:'保障期滿',amt:'保額',amt_txt:'保額文字'};
+function fl(k){return FLBL[k]||k}
+function fmtv(v){return v===null||v===undefined||v===''?'（空）':String(v).slice(0,40)}
+/* ---- 加密與上傳 ---- */
+function rnd(n){var a=new Uint8Array(n);crypto.getRandomValues(a);return a}
+function hexs(a){return Array.prototype.map.call(a,function(x){return('0'+x.toString(16)).slice(-2)}).join('')}
+function b64e(u8){var s='',C=0x8000;for(var i=0;i<u8.length;i+=C)s+=String.fromCharCode.apply(null,u8.subarray(i,i+C));return btoa(s)}
+function cat2(a,b){var o=new Uint8Array(a.length+b.length);o.set(a,0);o.set(b,a.length);return o}
+async function gzipU8(u8){if(typeof CompressionStream==='undefined') return null; var cs=new CompressionStream('gzip'); var w=cs.writable.getWriter(); w.write(u8); w.close(); return new Uint8Array(await new Response(cs.readable).arrayBuffer())}
+async function encNew(u8){
+  var k=rnd(32), iv=rnd(12), key=await crypto.subtle.importKey('raw',k,'AES-GCM',false,['encrypt']);
+  var ct=new Uint8Array(await crypto.subtle.encrypt({name:'AES-GCM',iv:iv},key,u8));
+  return {id:hexs(rnd(12)),k:b64e(k),bin:cat2(iv,ct)};
+}
+async function admSave(){
+  if(ADM.busy) return; ADM.busy=true;
+  var btn=$('aSave'), say=function(t){if(btn) btn.textContent=t};
+  try{
+    say('檢查線上版本…');
+    var ref=await gh('/repos/'+REPO+'/git/ref/heads/'+BRANCH), head=ref.object.sha;
+    var cm=await gh('/repos/'+REPO+'/git/commits/'+head);
+    var cur=await gh('/repos/'+REPO+'/contents/'+VAULT_PATH+'?ref='+head,{accept:'application/vnd.github.raw',raw:true});
+    if(cur.length!==VK.raw.length||hexs(cur)!==hexs(VK.raw)) throw new Error('線上網站在您登入後已被更新（可能是其他裝置或重建）。為避免覆蓋，請先複製您的修改內容，登出重新登入後再改。');
+    say('加密中…');
+    var files=[], del=[], now=nowIso(), log=[];
+    var NV=JSON.parse(JSON.stringify(state,function(k,v){return k==='f'&&v&&v.c?undefined:v})), NM={};
+    NV.f.forEach(function(f){f.m.forEach(function(m){NM[m.c]=m})});
+    if(ADM.thDirty){ var all=[]; state.f.forEach(function(f){f.m.forEach(function(m){all.push(m)})}); var nd=0;
+      for(var i0=0;i0<all.length;i0++){var m0=all[i0]; if(ADM.dirty[m0.c]) continue; say('門檻重算 '+(i0+1)+'/'+all.length);
+        var J0=await getModel(m0), h0=RPT.renderWeb(RPT.reportFromModel(J0.model,J0.ov)), o0=await openReport(m0);
+        if(h0!==o0){ADM.dirty[m0.c]=1; touch(m0); nd++}}
+      NV=JSON.parse(JSON.stringify(state,function(k,v){return k==='f'&&v&&v.c?undefined:v})); NM={}; NV.f.forEach(function(f){f.m.forEach(function(m){NM[m.c]=m})});
+      log.push({at:now,by:ADM.who,code:'',name:'',ch:['燈號門檻變更：'+nd+' 位客戶報告因此改變']}); }
+    for(var c in ADM.dirty){
+      var mb=NM[c]; if(!mb) continue; var J=ADM.models[c];
+      var r=RPT.reportFromModel(J.model,J.ov), html=enc.encode(RPT.renderWeb(r)), gz=await gzipU8(html);
+      var R1=await encNew(gz||html), M1=await encNew(enc.encode(JSON.stringify({model:J.model,ov:J.ov})));
+      files.push(R1,M1); if(mb.rf) del.push(mb.rf); if(mb.mf) del.push(mb.mf);
+      mb.rf=R1.id; mb.rk=R1.k; mb.rz=gz?1:0; mb.mf=M1.id; mb.mk=M1.k;
+      var dm=diffModel(J.orig?JSON.parse(J.orig):null,J.model), ovc=JSON.stringify(J.ov)!==J.origOv;
+      if(!dm.length&&!ovc&&!mb.nw){ if(ADM.thDirty) mb.ps=1; continue; }
+      mb.ps=1; if(!dm.length&&!ovc) dm=['建立'];
+      log.push({at:now,by:ADM.who,code:c,name:mb.n,ch:dm.slice(0,40).concat(ovc?['手動文字已更新']:[])});
+    }
+    ADM.removed.forEach(function(mb){[mb.rf,mb.pf,mb.mf].forEach(function(x){if(x)del.push(x)})});
+    NV.f=NV.f.filter(function(f){if(f.m.length) return true; NV.st.rt.push(f.c); return false});
+    if(ADM.acts.length) log.push({at:now,by:ADM.who,code:'',name:'',ch:ADM.acts.slice()});
+    var old=[]; if(state.lg){try{old=JSON.parse(dec.decode(await openFile(state.lg,state.lk))).log||[]}catch(e){throw new Error('讀取編輯紀錄失敗')} del.push(state.lg)}
+    var L=await encNew(enc.encode(JSON.stringify({log:old.concat(log)}))); files.push(L);
+    NV.f.forEach(function(f){f.m.forEach(function(m){delete m.nw})});
+    NV.lg=L.id; NV.lk=L.k; NV.rev=hexs(rnd(8)); NV.v=4;
+    var iv=rnd(12), vk=new Uint8Array(await crypto.subtle.encrypt({name:'AES-GCM',iv:iv,additionalData:enc.encode('V2')},VK.key,enc.encode(JSON.stringify(NV))));
+    var vbin=cat2(cat2(enc.encode('V2'),iv),vk);
+    say('上傳中（0/'+(files.length+1)+'）…');
+    var tree=[], k=0;
+    for(var i=0;i<files.length;i++){var b=await gh('/repos/'+REPO+'/git/blobs',{method:'POST',body:{content:b64e(files[i].bin),encoding:'base64'}}); tree.push({path:'d/'+files[i].id+'.bin',mode:'100644',type:'blob',sha:b.sha}); say('上傳中（'+(++k)+'/'+(files.length+1)+'）…')}
+    var vb=await gh('/repos/'+REPO+'/git/blobs',{method:'POST',body:{content:b64e(vbin),encoding:'base64'}}); tree.push({path:VAULT_PATH,mode:'100644',type:'blob',sha:vb.sha});
+    del.forEach(function(id){tree.push({path:'d/'+id+'.bin',mode:'100644',type:'blob',sha:null})});
+    var t=await gh('/repos/'+REPO+'/git/trees',{method:'POST',body:{base_tree:cm.tree.sha,tree:tree}});
+    var msg='管理員更新 '+now+'（'+ADM.who+'）：'+log.length+' 筆';
+    var nc=await gh('/repos/'+REPO+'/git/commits',{method:'POST',body:{message:msg,tree:t.sha,parents:[head]}});
+    await gh('/repos/'+REPO+'/git/refs/heads/'+BRANCH,{method:'PATCH',body:{sha:nc.sha,force:false}});
+    VK.raw=vbin; await reloadVault();
+    alert('已發布。GitHub Pages 通常 1–3 分鐘內更新；修改過的客戶 PDF 標為「待更新」，可先用「列印／另存 PDF」。');
+    route();
+  }catch(e){alert('發布失敗：'+e.message+'\n（修改仍保留在此頁面，可稍後再試）'); say('儲存並發布')}
+  finally{ADM.busy=false}
+}
+/* ---- 燈號門檻 ---- */
+var THL=[['minor_age','未成年年齡（未滿幾歲算未成年）','歲'],['senior_age','高齡年齡（幾歲以上）','歲'],['life_ok','壽險「充足」門檻（成年）','元'],['life_mid','壽險「尚可」門檻（成年）','元'],
+ ['life_ok_senior','壽險「充足」門檻（高齡）','元'],['life_mid_senior','壽險「尚可」門檻（高齡）','元'],['acc_ok','意外死殘「充足」門檻（成年；低於此值提示意外保額）','元'],['acc_mid','意外死殘「尚可」門檻（成年）','元'],
+ ['acc_ok_minor','意外死殘「充足」門檻（未成年）','元'],['acc_mid_minor','意外死殘「尚可」門檻（未成年）','元'],['crit_ok','重大傷病「充足」保額門檻','元'],['crit_age','重大傷病定期保障需到幾歲才算充足','歲'],
+ ['disab_age','失能長照定期保障需到幾歲才算充足','歲'],['hh_mid_ratio','家庭責任：缺口占責任額比例在此以內為「尚可」','比例']];
+function showTH(){
+  $('back').hidden=false; $('back').href='#/'; $('bt').textContent='燈號門檻'; document.title='保單健檢';
+  var cur=state.th||{}, h=admBar('th')+'<h1>燈號門檻</h1><p class="sub">改了之後，所有客戶的燈號、4 個重點數字、缺口建議都依新門檻重算（發布時全部重新加密上傳，PDF 標為待更新）。留空＝使用預設。</p><div class="card adf" id="thF">';
+  THL.forEach(function(t){var d=RPT.TH_DEFAULT[t[0]]; h+=fld(t[1]+'（預設 '+(t[2]==='元'?RPT.fmtNt(d):d+(t[2]==='歲'?' 歲':''))+'）','<input data-th="'+t[0]+'" type="number" step="any" value="'+(cur[t[0]]!==undefined?cur[t[0]]:'')+'" placeholder="'+d+'">')});
+  h+='<div class="admb"><button class="btn pri" type="button" id="thOk">套用（預覽，尚未發布）</button><button class="btn" type="button" id="thDef">全部恢復預設</button></div><div id="thMsg" class="rnote2"></div></div>';
+  $('view').innerHTML=h; wireBar();
+  function apply(clear){var t={}; [].forEach.call(document.querySelectorAll('[data-th]'),function(i){if(clear) i.value=''; if(i.value!==''&&!isNaN(Number(i.value))) t[i.dataset.th]=Number(i.value)});
+    state.th=t; RPT.setGlobalTH(t); ADM.thDirty=true; cache={}; ADM.acts.push('燈號門檻改為：'+(Object.keys(t).length?Object.keys(t).map(function(k){return k+'='+t[k]}).join('、'):'全部預設'));
+    $('thMsg').textContent='已套用；打開任一客戶報告即可預覽，按「儲存並發布」才會更新網站。'; var a=document.querySelector('.admt'); if(a) a.innerHTML='管理員模式・'+esc(ADM.who)+'・<b>'+nDirty()+' 項未發布</b>'; var s=$('aSave'); if(s) s.disabled=false}
+  $('thOk').addEventListener('click',function(){apply(false)}); $('thDef').addEventListener('click',function(){apply(true)});
+}
+/* ---- 編輯紀錄 ---- */
+async function showLog(){
+  $('back').hidden=false; $('back').href='#/'; $('bt').textContent='編輯紀錄'; document.title='保單健檢';
+  var v=$('view'); v.innerHTML='<div id="msg">資料解密中…</div>';
+  var L=[]; try{if(state.lg) L=JSON.parse(dec.decode(await openFile(state.lg,state.lk))).log||[]}catch(e){}
+  var h='<h1>編輯紀錄</h1><p class="sub">共 '+L.length+' 筆（加密保存，誰、何時、改了什麼）</p>';
+  L.slice().reverse().forEach(function(x){h+='<div class="card adf"><div class="ah">'+esc(x.at)+'・'+esc(x.by)+(x.code?'・'+esc(x.code)+' '+esc(x.name):'')+'</div><ul class="lg">'+x.ch.map(function(c){return '<li>'+esc(c)+'</li>'}).join('')+'</ul></div>'});
+  v.innerHTML=h+(L.length?'':'<div id="msg">尚無紀錄</div>');
+}
+/* ---- 列印版（另存 PDF） ---- */
+function printReport(mb,html){
+  var w=window.open('','_blank'); if(!w){alert('請允許彈出視窗');return}
+  var css=document.getElementById('rcss').textContent;
+  w.document.open();
+  w.document.write('<!doctype html><html lang="zh-Hant-TW"><head><meta charset="utf-8"><title>'+esc(mb.n)+' 保單健檢報告</title><meta name="author" content="富邦人壽 \u8521\u6dd1\u60e0"><style>'+css+PDF_CSS+'</style></head><body>'+html+'<script>(async function(){try{await document.fonts.ready}catch(e){} ('+FIT_JS+')([[1.15,1.12,1.08,1.35,1.12],0.7]); setTimeout(function(){print()},300)})()<\/script></body></html>');
+  w.document.close();
+}
+
+})();
+</script>
+</body>
+</html>
